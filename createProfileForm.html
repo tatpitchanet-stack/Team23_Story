@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Portfolio Profile</title>
+
+</head>
+<body>
+
+    <div class="container">
+        <h1>Let's build your profile.</h1>
+        <div class="subtitle">Tell us a bit about your journey and interests.</div>
+        
+        <form id="portfolio-profile-form">
+            
+            <!-- Display Name Field -->
+            <div class="form-group">
+                <label for="displayName">Display Name *</label>
+                <input type="text" id="displayName" name="displayName" placeholder="Name" required>
+            </div>
+
+            <!-- What I Enjoy Field -->
+            <div class="form-group">
+                <label for="whatIEnjoy">What I Enjoy *</label>
+                <textarea id="whatIEnjoy" name="whatIEnjoy" rows="2" placeholder="Share your hobbies or things you love doing..." required></textarea>
+            </div>
+
+            <!-- What I've Tried Field -->
+            <div class="form-group">
+                <label for="whatIVeTried">What I've Tried *</label>
+                <textarea id="whatIVeTried" name="whatIVeTried" rows="2" placeholder="Projects, experiences, or challenges you've taken on..." required></textarea>
+            </div>
+
+            <!-- What I'm Curious About Field -->
+            <div class="form-group">
+                <label for="whatImCuriousAbout">What I'm Curious About *</label>
+                <textarea id="whatImCuriousAbout" name="whatImCuriousAbout" rows="2" placeholder="Technologies, topics, or skills you want to explore next..." required></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit">Save Profile →</button>
+        </form>
+    </div>
+
+</body>
+</html>
