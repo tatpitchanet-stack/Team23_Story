@@ -4,47 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create a portfolio</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
+    <main class="container min-vh-100 d-flex justify-content-center align-items-center py-5"></main>
+
     <div class="form-card">
-        <div class="form-header">
-            <h2>Create your portfolio</h2>
-            <p>Tell us about yourself.</p>
+        <div class="form-header text-center mb-4">
+            <span class="form-tag">MY LEARNING JOURNEY</span>
+            <h2 class="fw-bold mt-3">Create your portfolio</h2>
+            <p class="text-secondary">Tell us about yourself.</p>
         </div>
         
         <form id="portfolio-profile-form">
             
             <!-- Display Name Field -->
-            <div class="form-group">
-                <label for="displayName">Display name *</label>
-                <input type="text" id="displayName" name="displayName" placeholder="e.g. Jamie" required>
+            <div class="mb-3">
+                <label for="displayName" class="form-label">Display name *</label>
+                <input type="text" class="form-control" id="displayName" name="displayName" placeholder="e.g. Jamie" required>
             </div>
 
             <!-- What I Enjoy Field -->
-            <div class="form-group">
-                <label for="whatIEnjoy">What I enjoy</label>
-                <input type="text" id="whatIEnjoy" name="whatIEnjoy" placeholder="e.g. Designing websites" required>
+            <div class="mb-3">
+                <label for="whatIEnjoy" class="form-label">What I enjoy</label>
+                <input type="text" class="form-control" id="whatIEnjoy" name="whatIEnjoy" placeholder="e.g. Designing websites" required>
             </div>
 
             <!-- What I've Tried Field -->
-            <div class="form-group">
-                <label for="whatIVeTried">What I've tried</label>
-                <input type="text" id="whatIVeTried" name="whatIVeTried" placeholder="e.g. My first group project" required>
+            <div class="mb-3">
+                <label for="whatIVeTried" class="form-label" >What I've tried</label>
+                <input type="text" class="form-control" id="whatIVeTried" name="whatIVeTried" placeholder="e.g. My first group project" required>
             </div>
 
             <!-- What I'm Curious About Field -->
-            <div class="form-group">
-                <label for="whatImCuriousAbout">What I'm curious about</label>
-                <input type="text" id="whatImCuriousAbout" name="whatImCuriousAbout" placeholder="e.g. Cloud computing" required>
+            <div class="mb-4">
+                <label for="whatImCuriousAbout" class="form-label">What I'm curious about</label>
+                <input type="text" class="form-control" id="whatImCuriousAbout" name="whatImCuriousAbout" placeholder="e.g. Cloud computing" required>
             </div>
 
             <!-- Action Buttons -->
-            <div class="button-group">
-                <button type="submit" class="btn-primary">Create portfolio</button>
-                <button type="reset" class="btn-secondary">Clear</button>
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary flex-grow-1">Create portfolio</button>
+                <button type="reset" class="btn btn-outline-secondary px-4">Clear</button>
             </div>
         </form>
     </div>
+  </main>
 
 </body>
 </html>
