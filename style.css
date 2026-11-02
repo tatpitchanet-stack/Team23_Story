@@ -4,10 +4,11 @@
 }
 
 body {
-    margin: 0;
-    background-color: #f4f6fb;
     font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #eef3ff, #f8faff);
+    color: #293653;
 }
+
 
 
 .form-card {
@@ -15,68 +16,103 @@ body {
     max-width: 560px;
     padding: 40px;
     background-color: #ffffff;
-    border-radius: 20px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+    border-radius: 24px;
+    box-shadow: 0 12px 35px rgba(50, 75, 130, 0.10);
+    border: 1px solid #edf0f7;
 }
+
 
 
 .form-tag {
     display: inline-block;
-    padding: 6px 14px;
     background-color: #eaf0ff;
-    color: #3458a5;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: 1px;
+    color: #4169d8;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 8px 15px;
+    border-radius: 50px;
 }
 
 .form-header h2 {
-    color: #202b45;
+    color: #263b69;
+    font-size: 2rem;
 }
 
 .form-header p {
-    font-size: 14px;
+    font-size: 0.95rem;
 }
 
 
 .form-label {
-    color: #30394d;
+    color: #344563;
     font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
 }
 
 .form-control {
-    padding: 12px 14px;
-    border-radius: 10px;
-    border: 1px solid #dce1eb;
+    background-color: #f9faff;
+    border: 1px solid #dce3f0;
+    border-radius: 12px;
+    padding: 12px 15px;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.form-control::placeholder {
+    color: #a4adbd;
 }
 
 .form-control:focus {
-    border-color: #5478d4;
-    box-shadow: 0 0 0 3px rgba(84, 120, 212, 0.12);
+    background-color: #ffffff;
+    border-color: #6688e8;
+    box-shadow: 0 0 0 3px rgba(65, 105, 225, 0.12);
 }
+
 
 
 .btn {
-    padding: 12px 18px;
-    border-radius: 10px;
+    padding: 12px 20px;
+    border-radius: 12px;
     font-weight: 600;
+    transition: all 0.2s ease;
 }
 
 .btn-primary {
-    background-color: #4569c8;
-    border-color: #4569c8;
+    background-color: #4169e1;
+    border-color: #4169e1;
 }
 
 .btn-primary:hover {
-    background-color: #3455aa;
-    border-color: #3455aa;
+    background-color: #3154bd;
+    border-color: #3154bd;
+    transform: translateY(-2px);
+}
+
+.btn-outline-secondary {
+    border-color: #d5dce8;
+    color: #647086;
+}
+
+.btn-outline-secondary:hover {
+    transform: translateY(-2px);
 }
 
 
-@media screen and (max-width: 576px) {
+
+@media (max-width: 576px) {
+
     .form-card {
-        padding: 25px 20px;
-        border-radius: 16px;
+        padding: 28px 22px;
+        border-radius: 20px;
+    }
+
+    .form-header h2 {
+        font-size: 1.65rem;
+    }
+
+    .form-header p {
+        font-size: 0.9rem;
     }
 }
