@@ -5,8 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Learning Portfolio</title>
-
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -75,6 +73,14 @@
                 <div class="card form-card">
                     <div class="card-header bg-primary text-white">
                             <h4 class="mb-0">เพิ่มผลงาน (Portfolio Item)</h4>
+                    </div>
+                    <!-- เลือกโปรไฟล์เจ้าของผลงาน -->
+                    <div class="mb-3">
+                        <label for="profileSelect" class="form-label">เลือกโปรไฟล์เจ้าของผลงาน <span class="text-danger">*</span></label>
+                        <select class="form-select" id="profileSelect" name="profileSelect" required>
+                            <option value="">-- เลือกโปรไฟล์ --</option>
+                            <!-- JavaScript จะดึงชื่อโปรไฟล์มาสร้างเป็น option ให้เองอัตโนมัติ -->
+                        </select>
                     </div>
                     <div class="card-body">
                         <form id="portfolio-item-form">
@@ -388,7 +394,7 @@
             </div>
         </section>
     </main>
-    
+
     <script src="app.js"></script>
 </body>
 
