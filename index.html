@@ -15,18 +15,16 @@
             <div class="container">
                 <!-- Create Portfolio Profile -->
                 <div class="form-card mt-4">
-                    <div class="form-heading">
+                    <div class="form-heading portfolio-header">
                         <h3>Create your portfolio</h3>
-                    </div>
-
-                    <div>
                         <p>Tell us about yourself.</p>
                     </div>
 
                     <form id="portfolio-profile-form">
                         <!-- Display Name Field -->
-                        <div class="mb-3">
-                            <label for="displayName" class="form-label">Display Name <span class="required">*</span></label>
+                        <div class="mb-3 display-name-field">
+                            <label for="displayName" class="form-label">Display Name <span
+                                    class="required">*</span></label>
                             <input type="text" class="form-control" id="displayName" name="displayName"
                                 placeholder="Enter your name" required>
                         </div>
@@ -34,24 +32,27 @@
                         <!-- Three Textareas Row -->
                         <div class="row g-3">
                             <div class="col-md-4">
-                                <label for="whatIEnjoy" class="form-label">What I Enjoy <span class="required">*</span></label>
+                                <label for="whatIEnjoy" class="form-label">What I Enjoy <span
+                                        class="required">*</span></label>
                                 <textarea class="form-control" id="whatIEnjoy" name="whatIEnjoy" rows="3"
                                     placeholder="e.g. Designing websites" required></textarea>
                             </div>
 
                             <div class="col-md-4">
-                                <label for="whatIVeTried" class="form-label">What I’ve Tried <span class="required">*</span></label>
+                                <label for="whatIVeTried" class="form-label">What I’ve Tried <span
+                                        class="required">*</span></label>
                                 <textarea class="form-control" id="whatIVeTried" name="whatIVeTried" rows="3"
                                     placeholder="e.g. My first group project" required></textarea>
                             </div>
 
                             <div class="col-md-4">
-                                <label for="whatImCuriousAbout" class="form-label">What I’m Curious About <span class="required">*</span></label>
-                                <textarea class="form-control" id="whatImCuriousAbout" name="whatImCuriousAbout" rows="3"
-                                    placeholder="e.g. Cloud computing" required></textarea>
+                                <label for="whatImCuriousAbout" class="form-label">What I’m Curious About <span
+                                        class="required">*</span></label>
+                                <textarea class="form-control" id="whatImCuriousAbout" name="whatImCuriousAbout"
+                                    rows="3" placeholder="e.g. Cloud computing" required></textarea>
                             </div>
                         </div>
- 
+
                         <div class="d-flex gap-2">
                             <button type="submit" class="btn btn-primary-custom mt-3">
                                 <i class="me-2"></i>Create Portfolio
@@ -64,18 +65,19 @@
                 </div>
             </div>
         </section>
-        
+
         <!-- Portfolio Item Form Section -->
         <section id="add-portfolio-item" class="section-padding">
             <div class="container">
                 <div class="card form-card">
                     <div class="card-header portfolio-header">
-                            <h4 class="mb-0">เพิ่มผลงาน (Portfolio Item)</h4>
+                        <h4 class="mb-0">เพิ่มผลงาน (Portfolio Item)</h4>
                     </div>
-                    
+
                     <!-- เลือกโปรไฟล์เจ้าของผลงาน -->
                     <div class="mb-3 mt-3 px-3">
-                        <label for="profileSelect" class="form-label">เลือกโปรไฟล์เจ้าของผลงาน <span class="text-danger">*</span></label>
+                        <label for="profileSelect" class="form-label">เลือกโปรไฟล์เจ้าของผลงาน <span
+                                class="text-danger">*</span></label>
                         <select class="form-select" id="profileSelect" name="profileSelect" required>
                             <option value="">-- เลือกโปรไฟล์ --</option>
                         </select>
@@ -83,17 +85,19 @@
                     <div class="card-body">
                         <!-- ปรับ ID ฟอร์มเป็น portfolio-item-form ให้ตรงกับ JS -->
                         <form id="portfolio-item-form">
-                            
+
                             <!-- 1. Title -->
                             <div class="mb-3">
-                                <label for="title" class="form-label">ชื่อผลงาน (Title) <span class="text-danger">*</span></label>
+                                <label for="title" class="form-label">ชื่อผลงาน (Title) <span
+                                        class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="title" name="title" required>
                             </div>
 
                             <!-- 2. Type & 3. Date -->
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="type" class="form-label">2. ประเภทผลงาน (Type) <span class="text-danger">*</span></label>
+                                    <label for="type" class="form-label">2. ประเภทผลงาน (Type) <span
+                                            class="text-danger">*</span></label>
                                     <select class="form-select" id="type" name="type" required>
                                         <option value="">เลือกประเภท...</option>
                                         <option value="Project">Project</option>
@@ -102,7 +106,8 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="date" class="form-label">3. วันที่ (Date) <span class="text-danger">*</span></label>
+                                    <label for="date" class="form-label">3. วันที่ (Date) <span
+                                            class="text-danger">*</span></label>
                                     <input type="date" class="form-control" id="date" name="date" required>
                                 </div>
                             </div>
@@ -110,7 +115,8 @@
                             <!-- 4. Role -->
                             <div class="mb-3">
                                 <label for="role" class="form-label">4. บทบาทหรือหน้าที่ของคุณ (Role)</label>
-                                <input type="text" class="form-control" id="role" name="role" placeholder="เช่น Developer, Designer">
+                                <input type="text" class="form-control" id="role" name="role"
+                                    placeholder="เช่น Developer, Designer">
                             </div>
 
                             <!-- 5. Description -->
@@ -122,7 +128,8 @@
                             <!-- 6. Skills -->
                             <div class="mb-3">
                                 <label for="skills" class="form-label">6. ทักษะที่ใช้ (Skills)</label>
-                                <input type="text" class="form-control" id="skills" name="skills" placeholder="เช่น HTML, CSS, JavaScript">
+                                <input type="text" class="form-control" id="skills" name="skills"
+                                    placeholder="เช่น HTML, CSS, JavaScript">
                             </div>
 
                             <!-- 7. Reflection (4 sub-fields) -->
@@ -133,8 +140,10 @@
                                     <textarea class="form-control" id="whatIDid" name="whatIDid" rows="2"></textarea>
                                 </div>
                                 <div class="mb-2">
-                                    <label for="whatILearned" class="form-label">สิ่งที่ได้เรียนรู้ (What I learned)</label>
-                                    <textarea class="form-control" id="whatILearned" name="whatILearned" rows="2"></textarea>
+                                    <label for="whatILearned" class="form-label">สิ่งที่ได้เรียนรู้ (What I
+                                        learned)</label>
+                                    <textarea class="form-control" id="whatILearned" name="whatILearned"
+                                        rows="2"></textarea>
                                 </div>
                                 <div class="mb-2">
                                     <label for="challenge" class="form-label">ปัญหาหรือความท้าทาย (Challenge)</label>
@@ -148,8 +157,10 @@
 
                             <!-- 8. Evidence -->
                             <div class="mb-4">
-                                <label for="evidence" class="form-label">8. หลักฐานผลงาน (Evidence URL) <span class="text-danger">*</span></label>
-                                <input type="url" class="form-control" id="evidence" name="evidence" placeholder="https://..." required>
+                                <label for="evidence" class="form-label">8. หลักฐานผลงาน (Evidence URL) <span
+                                        class="text-danger">*</span></label>
+                                <input type="url" class="form-control" id="evidence" name="evidence"
+                                    placeholder="https://..." required>
                             </div>
 
                             <!-- Submit Button -->
@@ -168,7 +179,7 @@
             <div id="portfolio-list" class="row g-4"></div>
         </div>
 
-        
+
     </main>
 
     <script src="app.js"></script>

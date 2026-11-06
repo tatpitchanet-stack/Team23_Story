@@ -149,6 +149,14 @@ html {
     margin: 0;
 }
 
+.portfolio-header p {
+    margin: 0;
+}
+
+.display-name-field {
+    margin-top: 25px;
+}
+
 @media (max-width: 767.98px) {
     .section-padding {
         padding: 55px 0;
