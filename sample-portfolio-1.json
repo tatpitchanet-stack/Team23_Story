@@ -1,0 +1,51 @@
+{
+    "id": 1793988750678,
+    "displayName": "Sivakorn",
+    "whatIEnjoy": "Play game",
+    "whatIVeTried": "Housework",
+    "whatImCuriousAbout": "About ai",
+    "items": [
+        {
+            "id": "item1793988944275",
+            "profileId": "1793988750678",
+            "title": "รางวัลเหรียญทองแดง วิชาคณิตศาสตร์ระดับมัธยมปลาย สวช.",
+            "type": "Certificate",
+            "date": "2567-02-11",
+            "role": "นักเรียน",
+            "description": "รางวัลเหรียญทองแดง วิชาคณิตศาสตร์ระดับมัธยมปลาย สวช. รอบคัดเลือกตัวแทนจังหวัด",
+            "skills": [
+                "คณิตศาสตร์"
+            ],
+            "reflection": {
+                "whatIDid": "สอบแข่งขันคณิตศาสตร์",
+                "whatILearned": "รู้เกี่ยวกับการบริหารเวลาและควรพัฒนาตัวเองยังไง",
+                "challenge": "เวลาที่จำกัดและโจทย์ที่ค่อนข้างยาก",
+                "nextStep": "นำความรู้และประสบการณ์ที่ได้ไปใช้ต่อในอนาคต"
+            },
+            "evidence": [
+                "https://drive.google.com/file/d/11AwV0fwtRoIjC97WhrdgI47EapACbrAO/view"
+            ]
+        },
+        {
+            "id": "item1793989278690",
+            "profileId": "1793988750678",
+            "title": "เข้าร่วมปรับพื้นฐาน cstu41",
+            "type": "Activity",
+            "date": "2569-07-21",
+            "role": "นักศึกษา",
+            "description": "เข้าร่วมปรับพื้นฐาน cstu41 ",
+            "skills": [
+                "การรับฟัง"
+            ],
+            "reflection": {
+                "whatIDid": "เข้าร่วมปรับพื้นฐาน cstu41 ",
+                "whatILearned": "รู้เนื้อหาที่จะได้เรียนในอนาคต",
+                "challenge": "ความยากที่เพิ่มขึ้นจากมัธยม",
+                "nextStep": "ศึกษาต่อไปเพื่อที่จะเอาไปต่อยอดในอนาคต"
+            },
+            "evidence": [
+                "https://drive.google.com/file/d/1Fmq653GdojNRriujfzmRUZ5_U5wZcTBM/view"
+            ]
+        }
+    ]
+}
