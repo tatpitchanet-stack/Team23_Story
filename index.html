@@ -51,9 +51,7 @@
                                     placeholder="e.g. Cloud computing" required></textarea>
                             </div>
                         </div>
-
-                        <div id="profile-form-message" class="form-message mt-3" aria-live="polite"></div>
-                        
+ 
                         <div class="d-flex gap-2">
                             <button type="submit" class="btn btn-primary-custom mt-3">
                                 <i class="me-2"></i>Create Portfolio
@@ -169,111 +167,7 @@
             <div id="portfolio-list" class="row g-4"></div>
         </div>
 
-        <!-- Selected portfolio detail -->
-        <section id="portfolio-detail" hidden>
-            <div class="container">
-                <button type="button" class="btn btn-back mb-4" id="back-to-portfolios-btn">
-                    Back to Portfolios
-                </button>
-
-                <div class="portfolio-profile-card mb-4">
-                    <h3 id="detail-display-name">Portfolio Name</h3>
-
-                    <div class="row g-3">
-                        <div class="col-md-4">
-                            <div class="profile-info">
-                                <h4>What I Enjoy</h4>
-                                <p id="detail-what-i-enjoy"></p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="profile-info">
-                                <h4>What I’ve Tried</h4>
-                                <p id="detail-what-ive-tried"></p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="profile-info">
-                                <h4>What I’m Curious About</h4>
-                                <p id="detail-what-im-curious-about"></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Portfolio Items list: cards should stay brief -->
-                <div class="items-header d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
-                    <h3 class="subsection-title">Portfolio Items</h3>
-
-                    <button type="button" class="btn btn-primary-custom" id="show-add-item-btn">
-                        Add Item
-                    </button>
-                </div>
-                <div id="items-empty-state" class="empty-state">
-                    <h4>No portfolio items yet</h4>
-                </div>
-
-                <div id="portfolio-items-list" class="row g-3"></div>
-
-                <section id="add-item-panel" class="form-card mt-4" hidden>
-                    <h3>Add Portfolio Item</h3>
-                    
-                    <form class="portfolio-item-form-alt" novalidate>
-                        <!-- (โครงสร้างฟอร์มสำรอง) -->
-                    </form>
-                </section>
-
-                <section id="item-detail-panel" class="item-detail-card mt-4" hidden>
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h3>Portfolio Item Details</h3>
-
-                        <button type="button" class="btn btn-outline-secondary" id="close-item-detail-btn">
-                            Close Details
-                        </button>
-                    </div>
-
-                    <h4 id="detail-item-title"></h4>
-                    <div class="detail-meta mb-4">
-                        <span id="detail-item-type"></span>
-                        <span id="detail-item-date"></span>
-                        <span id="detail-item-role"></span>
-                    </div>
-
-                    <div class="detail-block">
-                        <h5>Description</h5>
-                        <p id="detail-item-description"></p>
-                    </div>
-                    <div class="detail-block">
-                        <h5>Skills</h5>
-                        <p id="detail-item-skills"></p>
-                    </div>
-
-                    <div class="reflection-detail-grid">
-                        <div class="detail-block">
-                            <h5>What I did</h5>
-                            <p id="detail-reflection-did"></p>
-                        </div>
-                        <div class="detail-block">
-                            <h5>What I learned</h5>
-                            <p id="detail-reflection-learned"></p>
-                        </div>
-                        <div class="detail-block">
-                            <h5>Challenge</h5>
-                            <p id="detail-reflection-challenge"></p>
-                        </div>
-                        <div class="detail-block">
-                            <h5>Next Step</h5>
-                            <p id="detail-reflection-next-step"></p>
-                        </div>
-                    </div>
-
-                    <div class="detail-block">
-                        <h5>Evidence</h5>
-                        <a id="detail-item-evidence" href="#" target="_blank" rel="noopener noreferrer">View Evidence</a>
-                    </div>
-                </section>
-            </div>
-        </section>
+        
     </main>
 
     <script src="app.js"></script>
