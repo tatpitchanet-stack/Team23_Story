@@ -61,7 +61,7 @@ textarea.form-control {
 
 .form-message {
     color: #cc4545;
-    font-size: .92rem;
+    font-size: 15px;
 }
 
 .btn-primary-custom {
@@ -84,7 +84,7 @@ textarea.form-control {
 }
 
 .subsection-title {
-    font-size: 1.45rem;
+    font-size: 23px;
     font-weight: 600;
 }
 
@@ -94,7 +94,7 @@ textarea.form-control {
 }
 
 .portfolio-profile-card h3 {
-    font-size: 1.8rem;
+    font-size: 28px;
     font-weight: 600;
 }
 
@@ -106,7 +106,7 @@ textarea.form-control {
 }
 
 .profile-info h4 {
-    font-size: 1rem;
+    font-size: 16px;
     font-weight: 500;
 }
 
@@ -128,7 +128,25 @@ textarea.form-control {
     border-radius: 9px;
     color: #2f4f82;
     background: #edf2fa;
-    font-size: .9rem;
+    font-size: 15px;
+}
+
+html {
+    scroll-behavior: smooth;
+} 
+
+.portfolio-header {
+    padding: 20px 25px;
+    color: white;
+    background: #5b99e0;
+    border: none;
+    border-radius: 20px 20px 0 0 !important;
+}
+
+.portfolio-header h4 {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0;
 }
 
 @media (max-width: 767.98px) {
@@ -140,5 +158,6 @@ textarea.form-control {
     .portfolio-profile-card {
         padding: 22px;
     }
+  
 
 }
