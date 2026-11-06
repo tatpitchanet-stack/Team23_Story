@@ -58,32 +58,39 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
 
             const selectedProfileId = document.getElementById('profileSelect').value;
+            
+            // แปลง skills จากข้อความคั่นด้วยคอมมา (เช่น "HTML, CSS") ให้เป็น Array ตาม JSON Contract
+            const skillsInput = document.getElementById('skills').value;
+            const skillsArray = skillsInput ? skillsInput.split(',').map(s => s.trim()) : [];
+
+            // แปลง evidence เป็น Array ของลิงก์ตาม JSON Contract
+            const evidenceInput = document.getElementById('evidence').value;
+            const evidenceArray = evidenceInput ? [evidenceInput] : [];
 
             const newItem = {
-                id: Date.now(),
-                profileId: selectedProfileId, // บันทึกว่าผลงานนี้เป็นของโปรไฟล์ ID ไหน
+                id: "item" + Date.now(),
+                profileId: selectedProfileId,
                 title: document.getElementById('title').value,
                 type: document.getElementById('type').value,
                 date: document.getElementById('date').value,
                 role: document.getElementById('role').value,
                 description: document.getElementById('description').value,
-                skills: document.getElementById('skills').value,
+                skills: skillsArray,
                 reflection: {
-                    whatIdid: document.getElementById('whatIdid').value,
-                    whatIlearned: document.getElementById('whatIlearned').value,
+                    whatIDid: document.getElementById('whatIDid').value,
+                    whatILearned: document.getElementById('whatILearned').value,
                     challenge: document.getElementById('challenge').value,
                     nextStep: document.getElementById('nextStep').value
                 },
-                evidence: document.getElementById('evidence').value
+                evidence: evidenceArray
             };
 
             let items = JSON.parse(localStorage.getItem('portfolio_items')) || [];
             items.push(newItem);
             localStorage.setItem('portfolio_items', JSON.stringify(items));
             
-            alert('เพิ่มผลงานสำเร็จ!');
+            alert("Portfolio Item saved!");
             itemForm.reset();
         });
     }
-
 });

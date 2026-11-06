@@ -67,7 +67,7 @@
             </div>
         </section>
         
-            <!-- Portfolio Item Form Section -->
+        <!-- Portfolio Item Form Section -->
         <section id="add-portfolio-item" class="section-padding">
             <div class="container">
                 <div class="card form-card">
@@ -75,19 +75,19 @@
                             <h4 class="mb-0">เพิ่มผลงาน (Portfolio Item)</h4>
                     </div>
                     <!-- เลือกโปรไฟล์เจ้าของผลงาน -->
-                    <div class="mb-3">
+                    <div class="mb-3 mt-3 px-3">
                         <label for="profileSelect" class="form-label">เลือกโปรไฟล์เจ้าของผลงาน <span class="text-danger">*</span></label>
                         <select class="form-select" id="profileSelect" name="profileSelect" required>
                             <option value="">-- เลือกโปรไฟล์ --</option>
-                            <!-- JavaScript จะดึงชื่อโปรไฟล์มาสร้างเป็น option ให้เองอัตโนมัติ -->
                         </select>
                     </div>
                     <div class="card-body">
+                        <!-- ปรับ ID ฟอร์มเป็น portfolio-item-form ให้ตรงกับ JS -->
                         <form id="portfolio-item-form">
                             
                             <!-- 1. Title -->
                             <div class="mb-3">
-                                <label for="title" class="form-label">1. ชื่อผลงาน (Title) <span class="text-danger">*</span></label>
+                                <label for="title" class="form-label">ชื่อผลงาน (Title) <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="title" name="title" required>
                             </div>
 
@@ -130,12 +130,12 @@
                             <div class="p-3 mb-3 border rounded bg-white">
                                 <h5 class="mb-3">7. สิ่งที่ได้จากการทำงาน (Reflection)</h5>
                                 <div class="mb-2">
-                                    <label for="whatIdid" class="form-label">สิ่งที่ทำ (What I did)</label>
-                                    <textarea class="form-control" id="whatIdid" name="whatIdid" rows="2"></textarea>
+                                    <label for="whatIDid" class="form-label">สิ่งที่ทำ (What I did)</label>
+                                    <textarea class="form-control" id="whatIDid" name="whatIDid" rows="2"></textarea>
                                 </div>
                                 <div class="mb-2">
-                                    <label for="whatIlearned" class="form-label">สิ่งที่ได้เรียนรู้ (What I learned)</label>
-                                    <textarea class="form-control" id="whatIlearned" name="whatIlearned" rows="2"></textarea>
+                                    <label for="whatILearned" class="form-label">สิ่งที่ได้เรียนรู้ (What I learned)</label>
+                                    <textarea class="form-control" id="whatILearned" name="whatILearned" rows="2"></textarea>
                                 </div>
                                 <div class="mb-2">
                                     <label for="challenge" class="form-label">ปัญหาหรือความท้าทาย (Challenge)</label>
@@ -164,210 +164,113 @@
             </div>
         </section>
 
-                    <!-- JavaScript inserts portfolio cards into this container -->
-                    <div id="portfolio-list" class="row g-4"></div>
+        <!-- Container สำหรับแสดงรายการพอร์ตโฟลิโอ -->
+        <div class="container my-4">
+            <div id="portfolio-list" class="row g-4"></div>
+        </div>
+
+        <!-- Selected portfolio detail -->
+        <section id="portfolio-detail" hidden>
+            <div class="container">
+                <button type="button" class="btn btn-back mb-4" id="back-to-portfolios-btn">
+                    Back to Portfolios
+                </button>
+
+                <div class="portfolio-profile-card mb-4">
+                    <h3 id="detail-display-name">Portfolio Name</h3>
+
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="profile-info">
+                                <h4>What I Enjoy</h4>
+                                <p id="detail-what-i-enjoy"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="profile-info">
+                                <h4>What I’ve Tried</h4>
+                                <p id="detail-what-ive-tried"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="profile-info">
+                                <h4>What I’m Curious About</h4>
+                                <p id="detail-what-im-curious-about"></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Selected portfolio detail -->
-                <section id="portfolio-detail" hidden>
-                    <button type="button" class="btn btn-back mb-4" id="back-to-portfolios-btn">
-                        Back to Portfolios
+                <!-- Portfolio Items list: cards should stay brief -->
+                <div class="items-header d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
+                    <h3 class="subsection-title">Portfolio Items</h3>
+
+                    <button type="button" class="btn btn-primary-custom" id="show-add-item-btn">
+                        Add Item
                     </button>
+                </div>
+                <div id="items-empty-state" class="empty-state">
+                    <h4>No portfolio items yet</h4>
+                </div>
 
-                    <div class="portfolio-profile-card mb-4">
-                        <h3 id="detail-display-name">Portfolio Name</h3>
+                <div id="portfolio-items-list" class="row g-3"></div>
 
-                        <div class="row g-3">
-                            <div class="col-md-4">
-                                <div class="profile-info">
-                                    <h4>What I Enjoy</h4>
-                                    <p id="detail-what-i-enjoy"></p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="profile-info">
-                                    <h4>What I’ve Tried</h4>
-                                    <p id="detail-what-ive-tried"></p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="profile-info">
-                                    <h4>What I’m Curious About</h4>
-                                    <p id="detail-what-im-curious-about"></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <section id="add-item-panel" class="form-card mt-4" hidden>
+                    <h3>Add Portfolio Item</h3>
+                    
+                    <form class="portfolio-item-form-alt" novalidate>
+                        <!-- (โครงสร้างฟอร์มสำรอง) -->
+                    </form>
+                </section>
 
-                    <!-- Portfolio Items list: cards should stay brief -->
-                    <div class="items-header d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
-                        <h3 class="subsection-title">Portfolio Items</h3>
+                <section id="item-detail-panel" class="item-detail-card mt-4" hidden>
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3>Portfolio Item Details</h3>
 
-                        <button type="button" class="btn btn-primary-custom" id="show-add-item-btn">
-                            Add Item
+                        <button type="button" class="btn btn-outline-secondary" id="close-item-detail-btn">
+                            Close Details
                         </button>
                     </div>
-                    <div id="items-empty-state" class="empty-state">
-                        <h4>No portfolio items yet</h4>
+
+                    <h4 id="detail-item-title"></h4>
+                    <div class="detail-meta mb-4">
+                        <span id="detail-item-type"></span>
+                        <span id="detail-item-date"></span>
+                        <span id="detail-item-role"></span>
                     </div>
 
-                    <div id="portfolio-items-list" class="row g-3"></div>
+                    <div class="detail-block">
+                        <h5>Description</h5>
+                        <p id="detail-item-description"></p>
+                    </div>
+                    <div class="detail-block">
+                        <h5>Skills</h5>
+                        <p id="detail-item-skills"></p>
+                    </div>
 
-                    <section id="add-item-panel" class="form-card mt-4" hidden>
-                        <h3>Add Portfolio Item</h3>
-
-                        <form id="item-form" novalidate>
-                            <div class="row g-3">
-                                <div class="col-md-8">
-                                    <label for="itemTitle" class="form-label">Title <span
-                                            class="required">*</span></label>
-                                    <input type="text" class="form-control" id="itemTitle" name="title"
-                                        placeholder="Enter item title" required>
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="itemType" class="form-label">Type <span
-                                            class="required">*</span></label>
-                                    <select class="form-select" id="itemType" name="type" required>
-                                        <option value="">Choose type</option>
-                                        <option value="Project">Project</option>
-                                        <option value="Activity">Activity</option>
-                                        <option value="Course">Course</option>
-                                        <option value="Achievement">Achievement</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="itemDate" class="form-label">Date <span
-                                            class="required">*</span></label>
-                                    <input type="date" class="form-control" id="itemDate" name="date" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="itemRole" class="form-label">Role <span
-                                            class="required">*</span></label>
-                                    <input type="text" class="form-control" id="itemRole" name="role" required>
-                                </div>
-                                <div class="col-12">
-                                    <label for="itemDescription" class="form-label">Description <span
-                                            class="required">*</span></label>
-                                    <textarea class="form-control" id="itemDescription" name="description" rows="3"
-                                        required></textarea>
-                                </div>
-                                <div class="col-12">
-                                    <label for="itemSkills" class="form-label">Skills <span
-                                            class="required">*</span></label>
-                                    <input type="text" class="form-control" id="itemSkills" name="skills" required>
-                                </div>
-                            </div>
-
-                            <div class="mt-4">
-                                <h4>Reflection</h4>
-                            </div>
-
-                            <div class="row g-3 mt-1">
-                                <div class="col-md-6">
-                                    <label for="reflectionDid" class="form-label">
-                                        What I did <span class="required">*</span>
-                                    </label>
-                                    <textarea class="form-control" id="reflectionDid" name="whatIDid" rows="3"
-                                        required></textarea>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="reflectionLearned" class="form-label">
-                                        What I learned <span class="required">*</span>
-                                    </label>
-                                    <textarea class="form-control" id="reflectionLearned" name="whatILearned" rows="3"
-                                        required></textarea>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="reflectionChallenge" class="form-label">
-                                        Challenge <span class="required">*</span>
-                                    </label>
-                                    <textarea class="form-control" id="reflectionChallenge" name="challenge" rows="3"
-                                        required></textarea>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="reflectionNextStep" class="form-label">
-                                        Next Step <span class="required">*</span>
-                                    </label>
-                                    <textarea class="form-control" id="reflectionNextStep" name="nextStep" rows="3"
-                                        required></textarea>
-                                </div>
-
-                                <div class="col-12">
-                                    <label for="itemEvidence" class="form-label">
-                                        Evidence URL <span class="required">*</span>
-                                    </label>
-                                    <input type="url" class="form-control" id="itemEvidence" name="evidence" required>
-                                </div>
-                            </div>
-
-                            <div id="item-form-message" class="form-message mt-3"></div>
-
-                            <div class="mt-4">
-                                <button type="submit" class="btn btn-primary-custom">
-                                    Save Item
-                                </button>
-
-                                <button type="button" class="btn btn-outline-secondary" id="close-add-item-btn">
-                                    Cancel
-                                </button>
-                            </div>
-                        </form>
-                    </section>
-
-                    <section id="item-detail-panel" class="item-detail-card mt-4" hidden>
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-                            <h3>Portfolio Item Details</h3>
-
-                            <button type="button" class="btn btn-outline-secondary" id="close-item-detail-btn">
-                                Close Details
-                            </button>
-                        </div>
-
-                        <h4 id="detail-item-title"></h4>
-                        <div class="detail-meta mb-4">
-                            <span id="detail-item-type"></span>
-                            <span id="detail-item-date"></span>
-                            <span id="detail-item-role"></span>
-                        </div>
-
+                    <div class="reflection-detail-grid">
                         <div class="detail-block">
-                            <h5>Description</h5>
-                            <p id="detail-item-description"></p>
+                            <h5>What I did</h5>
+                            <p id="detail-reflection-did"></p>
                         </div>
                         <div class="detail-block">
-                            <h5>Skills</h5>
-                            <p id="detail-item-skills"></p>
+                            <h5>What I learned</h5>
+                            <p id="detail-reflection-learned"></p>
                         </div>
-
-                        <div class="reflection-detail-grid">
-                            <div class="detail-block">
-                                <h5>What I did</h5>
-                                <p id="detail-reflection-did"></p>
-                            </div>
-                            <div class="detail-block">
-                                <h5>What I learned</h5>
-                                <p id="detail-reflection-learned"></p>
-                            </div>
-                            <div class="detail-block">
-                                <h5>Challenge</h5>
-                                <p id="detail-reflection-challenge"></p>
-                            </div>
-                            <div class="detail-block">
-                                <h5>Next Step</h5>
-                                <p id="detail-reflection-next-step"></p>
-                            </div>
-                        </div>
-
                         <div class="detail-block">
-                            <h5>Evidence</h5>
-                            <a id="detail-item-evidence" href="#" target="_blank" rel="noopener noreferrer">View
-                                Evidence</a>
+                            <h5>Challenge</h5>
+                            <p id="detail-reflection-challenge"></p>
                         </div>
-                    </section>
+                        <div class="detail-block">
+                            <h5>Next Step</h5>
+                            <p id="detail-reflection-next-step"></p>
+                        </div>
+                    </div>
+
+                    <div class="detail-block">
+                        <h5>Evidence</h5>
+                        <a id="detail-item-evidence" href="#" target="_blank" rel="noopener noreferrer">View Evidence</a>
+                    </div>
                 </section>
             </div>
         </section>
