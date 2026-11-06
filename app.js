@@ -87,3 +87,127 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 });
+
+// ===== DISPLAY PORTFOLIO =====
+
+function displayPortfolio() {
+    const profiles = JSON.parse(
+        localStorage.getItem('portfolio_profiles') || '[]'
+    );
+
+    const items = JSON.parse(
+        localStorage.getItem('portfolio_items') || '[]'
+    );
+
+    const portfolioList = document.getElementById('portfolio-list');
+
+    if (!portfolioList) return;
+
+    portfolioList.innerHTML = '';
+
+    profiles.forEach(profile => {
+
+        const profileItems = items.filter(
+            item => String(item.profileId) === String(profile.id)
+        );
+
+        const card = document.createElement('div');
+        card.className = 'portfolio-card';
+
+        const name = document.createElement('h3');
+        name.textContent = profile.displayName;
+
+        const enjoy = document.createElement('p');
+        enjoy.textContent = 'What I Enjoy: ' + profile.whatIEnjoy;
+
+        const tried = document.createElement('p');
+        tried.textContent = 'What I Have Tried: ' + profile.whatIVeTried;
+
+        const curious = document.createElement('p');
+        curious.textContent =
+            'What I Am Curious About: ' + profile.whatImCuriousAbout;
+
+        const itemHeading = document.createElement('h4');
+        itemHeading.textContent = 'My Portfolio Items';
+
+        card.append(name, enjoy, tried, curious, itemHeading);
+
+        profileItems.forEach(item => {
+
+            const itemCard = document.createElement('div');
+            itemCard.className = 'portfolio-item';
+
+            const title = document.createElement('h5');
+            title.textContent = item.title;
+
+            const type = document.createElement('p');
+            type.textContent = 'Type: ' + item.type;
+
+            const date = document.createElement('p');
+            date.textContent = 'Date: ' + item.date;
+
+            const role = document.createElement('p');
+            role.textContent = 'Role: ' + item.role;
+
+            const description = document.createElement('p');
+            description.textContent = item.description;
+
+            const skills = document.createElement('p');
+            skills.textContent = 'Skills: ' +
+                (Array.isArray(item.skills)
+                    ? item.skills.join(', ')
+                    : item.skills);
+
+            const reflection = item.reflection || {};
+
+            const whatIDid = document.createElement('p');
+            whatIDid.textContent =
+                'What I Did: ' + (reflection.whatIDid || '');
+
+            const whatILearned = document.createElement('p');
+            whatILearned.textContent =
+                'What I Learned: ' + (reflection.whatILearned || '');
+
+            const challenge = document.createElement('p');
+            challenge.textContent =
+                'Challenge: ' + (reflection.challenge || '');
+
+            const nextStep = document.createElement('p');
+            nextStep.textContent =
+                'Next Step: ' + (reflection.nextStep || '');
+
+            itemCard.append(
+                title,
+                type,
+                date,
+                role,
+                description,
+                skills,
+                whatIDid,
+                whatILearned,
+                challenge,
+                nextStep
+            );
+
+            if (Array.isArray(item.evidence)) {
+                item.evidence.forEach(url => {
+                    const link = document.createElement('a');
+
+                    link.href = url;
+                    link.textContent = 'View Evidence';
+                    link.target = '_blank';
+                    link.rel = 'noopener noreferrer';
+
+                    itemCard.appendChild(link);
+                });
+            }
+
+            card.appendChild(itemCard);
+        });
+
+        portfolioList.appendChild(card);
+    });
+}
+
+// Display saved portfolios when the page loads
+document.addEventListener('DOMContentLoaded', displayPortfolio);
