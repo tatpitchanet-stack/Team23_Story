@@ -20,7 +20,7 @@
                         <p>Tell us about yourself.</p>
                     </div>
 
-                    <form id="portfolio-profile-form">
+                    <form id="portfolio-profile-form" novalidate>
                         <!-- Display Name Field -->
                         <div class="mb-3 display-name-field">
                             <label for="displayName" class="form-label">Display Name <span
@@ -84,7 +84,7 @@
                     </div>
                     <div class="card-body">
                         <!-- ปรับ ID ฟอร์มเป็น portfolio-item-form ให้ตรงกับ JS -->
-                        <form id="portfolio-item-form">
+                        <form id="portfolio-item-form" novalidate>
 
                             <!-- 1. Title -->
                             <div class="mb-3">
@@ -114,44 +114,54 @@
 
                             <!-- 4. Role -->
                             <div class="mb-3">
-                                <label for="role" class="form-label">4. บทบาทหรือหน้าที่ของคุณ (Role)</label>
+                                <label for="role" class="form-label">4. บทบาทหรือหน้าที่ของคุณ (Role) <span
+                                        class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="role" name="role"
-                                    placeholder="เช่น Developer, Designer">
+                                    placeholder="เช่น Developer, Designer" required>
                             </div>
 
                             <!-- 5. Description -->
                             <div class="mb-3">
-                                <label for="description" class="form-label">5. รายละเอียดผลงาน (Description)</label>
-                                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                                <label for="description" class="form-label">5. รายละเอียดผลงาน (Description) <span
+                                        class="text-danger">*</span></label>
+                                <textarea class="form-control" id="description" name="description" rows="3"
+                                    required></textarea>
                             </div>
 
                             <!-- 6. Skills -->
                             <div class="mb-3">
-                                <label for="skills" class="form-label">6. ทักษะที่ใช้ (Skills)</label>
+                                <label for="skills" class="form-label">6. ทักษะที่ใช้ (Skills) <span
+                                        class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="skills" name="skills"
-                                    placeholder="เช่น HTML, CSS, JavaScript">
+                                    placeholder="เช่น HTML, CSS, JavaScript" required>
                             </div>
 
                             <!-- 7. Reflection (4 sub-fields) -->
                             <div class="p-3 mb-3 border rounded bg-white">
                                 <h5 class="mb-3">7. สิ่งที่ได้จากการทำงาน (Reflection)</h5>
                                 <div class="mb-2">
-                                    <label for="whatIDid" class="form-label">สิ่งที่ทำ (What I did)</label>
-                                    <textarea class="form-control" id="whatIDid" name="whatIDid" rows="2"></textarea>
+                                    <label for="whatIDid" class="form-label">สิ่งที่ทำ (What I did) <span
+                                            class="text-danger">*</span></label>
+                                    <textarea class="form-control" id="whatIDid" name="whatIDid" rows="2"
+                                        required></textarea>
                                 </div>
                                 <div class="mb-2">
                                     <label for="whatILearned" class="form-label">สิ่งที่ได้เรียนรู้ (What I
-                                        learned)</label>
+                                        learned) <span class="text-danger">*</span></label>
                                     <textarea class="form-control" id="whatILearned" name="whatILearned"
-                                        rows="2"></textarea>
+                                        rows="2" required></textarea>
                                 </div>
                                 <div class="mb-2">
-                                    <label for="challenge" class="form-label">ปัญหาหรือความท้าทาย (Challenge)</label>
-                                    <textarea class="form-control" id="challenge" name="challenge" rows="2"></textarea>
+                                    <label for="challenge" class="form-label">ปัญหาหรือความท้าทาย (Challenge) <span
+                                            class="text-danger">*</span></label>
+                                    <textarea class="form-control" id="challenge" name="challenge" rows="2"
+                                        required></textarea>
                                 </div>
                                 <div class="mb-2">
-                                    <label for="nextStep" class="form-label">สิ่งที่จะทำต่อไป (Next step)</label>
-                                    <textarea class="form-control" id="nextStep" name="nextStep" rows="2"></textarea>
+                                    <label for="nextStep" class="form-label">สิ่งที่จะทำต่อไป (Next step) <span
+                                            class="text-danger">*</span></label>
+                                    <textarea class="form-control" id="nextStep" name="nextStep" rows="2"
+                                        required></textarea>
                                 </div>
                             </div>
 
