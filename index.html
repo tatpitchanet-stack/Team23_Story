@@ -10,17 +10,42 @@
 </head>
 
 <body>
+    <!-- Hero -->
+    <header class="hero">
+        <div class="container hero-inner">
+            <div class="hero-topbar">
+                <span class="hero-pill">TEAM 23</span>
+            </div>
+
+            <p class="hero-eyebrow">My learning journey</p>
+            <h1 class="hero-title">
+                <span class="hero-serif">My Learning</span>
+                <span class="hero-word">Portfolio</span>
+            </h1>
+            <p class="hero-sub">Create a profile, add the work you are proud of, and keep what you learned in one place.</p>
+
+            <nav class="hero-steps" aria-label="Steps">
+                <a href="#about" class="hero-step"><span class="hero-step-no">01</span>Create profile</a>
+                <a href="#add-portfolio-item" class="hero-step"><span class="hero-step-no">02</span>Add item</a>
+                <a href="#portfolio-section" class="hero-step"><span class="hero-step-no">03</span>My portfolios</a>
+            </nav>
+        </div>
+    </header>
+
     <main>
         <section id="about" class="section-padding">
             <div class="container">
                 <!-- Create Portfolio Profile -->
-                <div class="form-card mt-4">
+                <div class="form-card">
                     <div class="form-heading portfolio-header">
-                        <h3>Create your portfolio</h3>
-                        <p>Tell us about yourself.</p>
+                        <span class="step-no">01</span>
+                        <div>
+                            <h3>Create your portfolio</h3>
+                            <p>Tell us about yourself.</p>
+                        </div>
                     </div>
 
-                    <form id="portfolio-profile-form" novalidate>
+                    <form id="portfolio-profile-form" class="form-body" novalidate>
                         <!-- Display Name Field -->
                         <div class="mb-3 display-name-field">
                             <label for="displayName" class="form-label">Display Name <span
@@ -53,13 +78,11 @@
                             </div>
                         </div>
 
-                        <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-primary-custom mt-3">
-                                <i class="me-2"></i>Create Portfolio
-                            </button>
-                            <button type="reset" class="btn btn-secondary-custom mt-3">
-                                <i class="me-2"></i>Clear
-                            </button>
+                        <div id="profile-form-message" class="form-message mt-3" aria-live="polite"></div>
+
+                        <div class="d-flex flex-wrap gap-2 mt-3">
+                            <button type="submit" class="btn btn-primary-custom">Create Portfolio</button>
+                            <button type="reset" class="btn btn-secondary-custom">Clear</button>
                         </div>
                     </form>
                 </div>
@@ -69,20 +92,24 @@
         <!-- Portfolio Item Form Section -->
         <section id="add-portfolio-item" class="section-padding">
             <div class="container">
-                <div class="card form-card">
-                    <div class="card-header portfolio-header">
-                        <h4 class="mb-0">เพิ่มผลงาน (Portfolio Item)</h4>
+                <div class="form-card">
+                    <div class="portfolio-header">
+                        <span class="step-no">02</span>
+                        <div>
+                            <h3>เพิ่มผลงาน (Portfolio Item)</h3>
+                            <p>Add a project, activity or certificate to a profile.</p>
+                        </div>
                     </div>
 
                     <!-- เลือกโปรไฟล์เจ้าของผลงาน -->
-                    <div class="mb-3 mt-3 px-3">
+                    <div class="profile-picker">
                         <label for="profileSelect" class="form-label">เลือกโปรไฟล์เจ้าของผลงาน <span
                                 class="text-danger">*</span></label>
                         <select class="form-select" id="profileSelect" name="profileSelect" required>
                             <option value="">-- เลือกโปรไฟล์ --</option>
                         </select>
                     </div>
-                    <div class="card-body">
+                    <div class="form-body">
                         <!-- ปรับ ID ฟอร์มเป็น portfolio-item-form ให้ตรงกับ JS -->
                         <form id="portfolio-item-form" novalidate>
 
@@ -137,7 +164,7 @@
                             </div>
 
                             <!-- 7. Reflection (4 sub-fields) -->
-                            <div class="p-3 mb-3 border rounded bg-white">
+                            <div class="reflection-box mb-3">
                                 <h5 class="mb-3">7. สิ่งที่ได้จากการทำงาน (Reflection)</h5>
                                 <div class="mb-2">
                                     <label for="whatIDid" class="form-label">สิ่งที่ทำ (What I did) <span
@@ -175,7 +202,7 @@
 
                             <!-- Submit Button -->
                             <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-success">บันทึกผลงาน</button>
+                                <button type="submit" class="btn btn-primary-custom">บันทึกผลงาน</button>
                             </div>
 
                         </form>
@@ -185,12 +212,29 @@
         </section>
 
         <!-- Container สำหรับแสดงรายการพอร์ตโฟลิโอ -->
-        <div class="container my-4">
-            <div id="portfolio-list" class="row g-4"></div>
-        </div>
+        <section id="portfolio-section" class="section-padding section-list">
+            <div class="container">
+                <div class="list-heading">
+                    <span class="list-kicker">03</span>
+                    <h2>My Portfolios</h2>
+                </div>
 
-
+                <div class="content-panel">
+                    <span class="tick tick-tl" aria-hidden="true"></span>
+                    <span class="tick tick-tr" aria-hidden="true"></span>
+                    <span class="tick tick-bl" aria-hidden="true"></span>
+                    <span class="tick tick-br" aria-hidden="true"></span>
+                    <div id="portfolio-list" class="row g-4 align-items-start"></div>
+                </div>
+            </div>
+        </section>
     </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <span>CS100 · Team 23</span>
+        </div>
+    </footer>
 
     <script src="app.js"></script>
 </body>

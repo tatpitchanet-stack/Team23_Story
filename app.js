@@ -92,6 +92,17 @@ document.addEventListener('DOMContentLoaded', function () {
             // อัปเดตรายชื่อใน Dropdown และรายการ Portfolio บนหน้าเว็บทันทีหลังสร้างโปรไฟล์ใหม่เสร็จ
             loadProfilesToDropdown();
             displayPortfolio();
+
+            // เลือกโปรไฟล์ที่เพิ่งสร้างไว้ให้เลย แล้วเลื่อนไปที่ฟอร์มเพิ่มผลงานอัตโนมัติ
+            document.getElementById('profileSelect').value = profileData.id;
+            const itemSection = document.getElementById('add-portfolio-item');
+            if (itemSection) {
+                const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                itemSection.scrollIntoView({
+                    behavior: reduceMotion ? 'auto' : 'smooth',
+                    block: 'start'
+                });
+            }
         });
     }
 
@@ -190,7 +201,7 @@ function displayPortfolio() {
 
     portfolioList.innerHTML = '';
 
-    profiles.forEach(profile => {
+    profiles.forEach((profile, index) => {
 
         const profileItems = items.filter(
             item => String(item.profileId) === String(profile.id)
@@ -215,7 +226,16 @@ function displayPortfolio() {
         const itemHeading = document.createElement('h4');
         itemHeading.textContent = 'My Portfolio Items';
 
-        card.append(name, enjoy, tried, curious, itemHeading);
+        const no = document.createElement('span');
+        no.className = 'card-no';
+        no.textContent = String(index + 1).padStart(2, '0');
+
+
+        const meta = document.createElement('p');
+        meta.className = 'card-meta';
+        meta.textContent = profileItems.length + (profileItems.length === 1 ? ' portfolio item' : ' portfolio items');
+
+        card.append(no, name, meta, enjoy, tried, curious, itemHeading);
 
         profileItems.forEach(item => {
 
@@ -290,7 +310,11 @@ function displayPortfolio() {
             card.appendChild(itemCard);
         });
 
-        portfolioList.appendChild(card);
+        // Bootstrap grid: 1 column on phones, 2 on tablets, 3 on large screens
+        const col = document.createElement('div');
+        col.className = 'col-12 col-md-6 col-xl-4';
+        col.appendChild(card);
+        portfolioList.appendChild(col);
     });
 }
 

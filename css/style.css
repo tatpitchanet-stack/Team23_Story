@@ -1,171 +1,322 @@
-@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;900&display=swap');
 
-* {
-    box-sizing: border-box;
+:root {
+    --yellow: #f7ec9a;
+    --cream: #fffdf0;
+    --ink: #1a1a17;
+    --line: #e6dc86;
 }
 
 body {
-    margin: 0;
     font-family: 'Kanit', sans-serif;
-    color: #263247;
-    background: #ffffff;
-    font-weight: 300;
+    color: #3a3a30;
+    background: var(--cream);
 }
 
 .section-padding {
-    padding: 76px 0;
-}
-
-.section-soft {
-    background: #f5f7fb;
-}
-
-.form-card,
-.portfolio-profile-card {
-    background: #ffffff;
-    border: 1px solid #e7eaf0;
-    border-radius: 22px;
-    box-shadow: 0 12px 35px rgba(40, 55, 80, .06);
-}
-
-.form-card {
-    padding: 30px;
-}
-
-.form-label {
-    font-weight: 500;
-}
-
-.required {
-    color: #e85d5d;
-}
-
-.form-control,
-.form-select {
-    min-height: 46px;
-    border-color: #dfe4ec;
-    border-radius: 11px;
-    padding: 10px 13px;
-    font-weight: 300;
-}
-
-textarea.form-control {
-    min-height: unset;
-}
-
-.form-control:focus,
-.form-select:focus {
-    border-color: #4169a8;
-    box-shadow: 0 0 0 .2rem rgba(65, 105, 168, .13);
-}
-
-.form-message {
-    color: #cc4545;
-    font-size: 15px;
-}
-
-.btn-primary-custom {
-    border: 0;
-    border-radius: 12px;
-    padding: 11px 19px;
-    color: white;
-    background: #e85d5d;
-    font-weight: 500;
-}
-
-.btn-primary-custom:hover {
-    color: white;
-    background: #cc4545;
-}
-
-
-.btn-back:hover {
-    background: #edf2fa;
-}
-
-.subsection-title {
-    font-size: 23px;
-    font-weight: 600;
-}
-
-
-.portfolio-profile-card {
-    padding: 28px;
-}
-
-.portfolio-profile-card h3 {
-    font-size: 28px;
-    font-weight: 600;
-}
-
-.profile-info {
-    height: 100%;
-    padding: 17px;
-    border-radius: 14px;
-    background: #f7f8fb;
-}
-
-.profile-info h4 {
-    font-size: 16px;
-    font-weight: 500;
-}
-
-.profile-info p {
-    margin: 0;
-    color: #758094;
-    white-space: pre-wrap;
-}
-
-
-.detail-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 9px;
-}
-
-.detail-meta span {
-    padding: 6px 11px;
-    border-radius: 9px;
-    color: #2f4f82;
-    background: #edf2fa;
-    font-size: 15px;
+    padding: 48px 0;
 }
 
 html {
     scroll-behavior: smooth;
-} 
+}
+
+/* Hero */
+.hero {
+    background: var(--yellow);
+    color: var(--ink);
+    padding: 28px 0 70px;
+    border-radius: 0 0 40px 40px;
+}
+
+.hero-pill {
+    display: inline-block;
+    background: #fff;
+    padding: 6px 18px;
+    border-radius: 999px;
+    font-weight: 600;
+    letter-spacing: .2em;
+    font-size: 13px;
+}
+
+.hero-eyebrow {
+    margin: 60px 0 0;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.hero-title {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0 0;
+}
+
+.hero-serif {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+}
+
+.hero-word {
+    font-size: clamp(2.8rem, 12vw, 7rem);
+    font-weight: 900;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.hero-sub {
+    max-width: 520px;
+    margin: 18px 0 0;
+    font-size: 17px;
+}
+
+.hero-steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 28px;
+}
+
+.hero-step {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 20px 6px 6px;
+    background: #fff;
+    color: var(--ink);
+    border-radius: 999px;
+    text-decoration: none;
+}
+
+.hero-step-no {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--yellow);
+    font-size: 12px;
+}
+
+/* Forms */
+.form-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+}
 
 .portfolio-header {
-    padding: 20px 25px;
-    color: white;
-    background: #5b99e0;
-    border: none;
-    border-radius: 20px 20px 0 0 !important;
+    background: var(--yellow);
+    color: var(--ink);
+    padding: 18px 24px;
 }
 
-.portfolio-header h4 {
-    font-size: 20px;
-    font-weight: 500;
+.portfolio-header h3, .portfolio-header h4, .portfolio-header p {
     margin: 0;
 }
 
-.portfolio-header p {
-    margin: 0;
+.form-body, .card-body {
+    padding: 24px;
 }
 
-.display-name-field {
-    margin-top: 25px;
+.profile-picker {
+    padding: 20px 24px 0;
+}
+
+.reflection-box {
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--cream);
+}
+
+.required, .text-danger {
+    color: #d4483b !important;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--ink);
+    box-shadow: 0 0 0 3px var(--yellow);
+}
+
+.btn-primary-custom {
+    background: var(--ink);
+    color: #fff;
+    border-radius: 999px;
+    padding: 10px 26px;
+}
+
+.btn-primary-custom:hover {
+    background: #34331f;
+    color: var(--yellow);
+}
+
+.btn-secondary-custom {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 10px 24px;
+}
+
+/* Portfolio list */
+.section-list {
+    background: var(--yellow);
+}
+
+.list-heading {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.list-kicker {
+    background: var(--ink);
+    color: var(--yellow);
+    padding: 3px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+}
+
+.list-heading h2 {
+    margin: 10px 0 0;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--ink);
+}
+
+.content-panel {
+    background: rgba(255, 253, 240, .8);
+    padding: 32px 24px;
+    border-radius: 8px;
+}
+
+.tick {
+    display: none;
+}
+
+#portfolio-list:empty::before {
+    content: 'No portfolios yet. Create your first profile above.';
+    flex: 1 1 100%;
+    padding: 32px;
+    text-align: center;
+    border: 2px dashed #cfc46a;
+    border-radius: 12px;
+}
+
+.portfolio-card {
+    height: 100%;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+}
+
+.card-no {
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--ink);
+    border-bottom: 3px solid var(--ink);
+    display: inline-block;
+}
+
+.portfolio-card h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--ink);
+    overflow-wrap: anywhere;
+}
+
+.portfolio-card p {
+    margin: 0 0 4px;
+    font-size: 14.5px;
+    overflow-wrap: anywhere;
+}
+
+.card-meta {
+    color: #6f6c4d;
+    font-size: 13px;
+}
+
+.portfolio-card h4 {
+    margin: 16px 0 0;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+    font-size: 12px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+}
+
+.portfolio-item {
+    margin-top: 12px;
+    padding: 14px;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+}
+
+.portfolio-item h5 {
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.portfolio-item p {
+    color: #6f6c4d;
+    font-size: 14px;
+}
+
+.portfolio-item a {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 6px 16px;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 999px;
+    text-decoration: none;
+}
+
+.portfolio-item a:hover {
+    background: var(--yellow);
+    color: var(--ink);
+}
+
+.site-footer {
+    padding: 20px 0;
+    background: var(--ink);
+    color: #ddd;
+    font-size: 12px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+}
+
+.site-footer .container {
+    display: flex;
+    justify-content: space-between;
 }
 
 @media (max-width: 767.98px) {
-    .section-padding {
-        padding: 55px 0;
+    .hero-steps {
+        flex-direction: column;
     }
 
-    .form-card,
-    .portfolio-profile-card {
-        padding: 22px;
+    .content-panel, .form-body, .card-body {
+        padding: 20px 16px;
     }
-  
 
+}
+
+.form-message:empty {
+    display: none;
+}
+
+.step-no {
+    display: inline-block;
+    margin-bottom: 6px;
+    padding: 1px 10px;
+    background: var(--ink);
+    color: var(--yellow);
+    border-radius: 999px;
+    font-size: 12px;
 }
