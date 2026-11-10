@@ -35,10 +35,22 @@ function isHttpUrl(text) {
     }
 }
 
+// แสดงข้อความ error ในกล่องข้อความของฟอร์ม (ใช้ textContent ไม่ใช้ innerHTML)
+function showFormMessage(id, messages) {
+    const box = document.getElementById(id);
+    if (box) box.textContent = messages.join('\n');
+}
+
+// แปลง error ที่ได้จาก api.js ให้เป็นรายการข้อความ (ถ้าไม่ใช่ ApiError ถือว่าติดต่อ server ไม่ได้)
+function errorMessages(err) {
+    if (err && Array.isArray(err.errors) && err.errors.length > 0) return err.errors;
+    return ['ติดต่อ server ไม่ได้ กรุณาลองใหม่อีกครั้ง'];
+}
+
 document.addEventListener('DOMContentLoaded', function () {
 
     // --- ส่วนที่ 0: โหลดรายชื่อโปรไฟล์ใส่ลงใน Dropdown ของฟอร์มผลงาน ---
-    function loadProfilesToDropdown() {
+    async function loadProfilesToDropdown() {
         const profileSelect = document.getElementById('profileSelect');
         if (!profileSelect) return;
 
@@ -46,7 +58,13 @@ document.addEventListener('DOMContentLoaded', function () {
         profileSelect.innerHTML = '<option value="">-- เลือกโปรไฟล์ --</option>';
 
         // ดึงข้อมูลโปรไฟล์จาก LocalStorage
-        let profiles = JSON.parse(localStorage.getItem('portfolio_profiles')) || [];
+        let profiles = [];
+        try {
+            profiles = await getProfiles();
+        } catch (err) {
+            showFormMessage('item-form-message', errorMessages(err));
+            return;
+        }
 
         // วนลูปสร้าง <option> ให้เลือก
         profiles.forEach(profile => {
@@ -64,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- ส่วนที่ 1: บันทึกข้อมูล Profile (หลายโปรไฟล์) ---
     const profileForm = document.getElementById('portfolio-profile-form');
     if (profileForm) {
-        profileForm.addEventListener('submit', function (e) {
+        profileForm.addEventListener('submit', async function (e) {
             e.preventDefault();
 
             // ตรวจว่าทุกช่องมีข้อความจริง (ไม่ว่าง และไม่ใช่แค่ช่องว่าง)
@@ -74,27 +92,33 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
+            // id ให้ api.js (ต่อไปคือ server) เป็นคนสร้าง
             const profileData = {
-                id: String(Date.now()), // ใช้ timestamp เป็น ID ไม่ซ้ำกัน (เก็บเป็นสตริงให้ตรงกับ profileId ของ item)
                 displayName: document.getElementById('displayName').value.trim(),
                 whatIEnjoy: document.getElementById('whatIEnjoy').value.trim(),
                 whatIVeTried: document.getElementById('whatIVeTried').value.trim(),
                 whatImCuriousAbout: document.getElementById('whatImCuriousAbout').value.trim()
             };
 
-            let profiles = JSON.parse(localStorage.getItem('portfolio_profiles')) || [];
-            profiles.push(profileData);
-            localStorage.setItem('portfolio_profiles', JSON.stringify(profiles));
-            
+            showFormMessage('profile-form-message', []);
+            let savedProfile;
+            try {
+                savedProfile = await createProfile(profileData);
+            } catch (err) {
+                // ข้อมูลที่กรอกไว้ยังอยู่ในฟอร์ม แสดงแค่ข้อความ error
+                showFormMessage('profile-form-message', errorMessages(err));
+                return;
+            }
+
             alert('สร้างและบันทึกโปรไฟล์สำเร็จ!');
             profileForm.reset();
-            
+
             // อัปเดตรายชื่อใน Dropdown และรายการ Portfolio บนหน้าเว็บทันทีหลังสร้างโปรไฟล์ใหม่เสร็จ
-            loadProfilesToDropdown();
-            displayPortfolio();
+            await loadProfilesToDropdown();
+            await displayPortfolio();
 
             // เลือกโปรไฟล์ที่เพิ่งสร้างไว้ให้เลย แล้วเลื่อนไปที่ฟอร์มเพิ่มผลงานอัตโนมัติ
-            document.getElementById('profileSelect').value = profileData.id;
+            document.getElementById('profileSelect').value = savedProfile.id;
             const itemSection = document.getElementById('add-portfolio-item');
             if (itemSection) {
                 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -110,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- ส่วนที่ 2: บันทึกข้อมูล Portfolio Item (ผูกกับ Profile ID ที่เลือก) ---
     const itemForm = document.getElementById('portfolio-item-form');
     if (itemForm) {
-        itemForm.addEventListener('submit', function (e) {
+        itemForm.addEventListener('submit', async function (e) {
             e.preventDefault();
 
             // ต้องเลือกโปรไฟล์เจ้าของผลงานก่อนเสมอ
@@ -153,8 +177,8 @@ document.addEventListener('DOMContentLoaded', function () {
             // แปลง evidence เป็น Array ของลิงก์ตาม JSON Contract
             const evidenceArray = [evidenceInput];
 
+            // id ให้ api.js (ต่อไปคือ server) เป็นคนสร้าง
             const newItem = {
-                id: "item" + Date.now(),
                 profileId: selectedProfileId,
                 title: document.getElementById('title').value.trim(),
                 type: document.getElementById('type').value,
@@ -171,35 +195,48 @@ document.addEventListener('DOMContentLoaded', function () {
                 evidence: evidenceArray
             };
 
-            let items = JSON.parse(localStorage.getItem('portfolio_items')) || [];
-            items.push(newItem);
-            localStorage.setItem('portfolio_items', JSON.stringify(items));
-            
+            showFormMessage('item-form-message', []);
+            try {
+                await createItem(newItem);
+            } catch (err) {
+                // ข้อมูลที่กรอกไว้ยังอยู่ในฟอร์ม แสดงแค่ข้อความ error
+                showFormMessage('item-form-message', errorMessages(err));
+                return;
+            }
+
             alert("Portfolio Item saved!");
             itemForm.reset();
 
             // แสดง Portfolio Item ที่เพิ่งบันทึกบนหน้าเว็บทันที
-            displayPortfolio();
+            await displayPortfolio();
         });
     }
 });
 
 // ===== DISPLAY PORTFOLIO =====
 
-function displayPortfolio() {
-    const profiles = JSON.parse(
-        localStorage.getItem('portfolio_profiles') || '[]'
-    );
-
-    const items = JSON.parse(
-        localStorage.getItem('portfolio_items') || '[]'
-    );
-
+async function displayPortfolio() {
     const portfolioList = document.getElementById('portfolio-list');
 
     if (!portfolioList) return;
 
-    portfolioList.innerHTML = '';
+    // แสดงสถานะระหว่างรอข้อมูล
+    portfolioList.textContent = '';
+    const status = document.createElement('p');
+    status.className = 'col-12 text-center';
+    status.textContent = 'กำลังโหลด...';
+    portfolioList.appendChild(status);
+
+    let profiles, items;
+    try {
+        profiles = await getProfiles();
+        items = await getItems();
+    } catch (err) {
+        status.textContent = errorMessages(err).join(' ');
+        return;
+    }
+
+    portfolioList.textContent = '';
 
     profiles.forEach((profile, index) => {
 

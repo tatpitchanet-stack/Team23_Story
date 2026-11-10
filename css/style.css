@@ -307,6 +307,11 @@ html {
 
 }
 
+.form-message {
+    color: #b73a2f;
+    white-space: pre-line;
+}
+
 .form-message:empty {
     display: none;
 }
