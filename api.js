@@ -1,11 +1,7 @@
 // ===== API LAYER =====
-// ทุกฟังก์ชันเป็น async และคืนข้อมูลรูปแบบเดียวกับที่ server จะตอบ
-// ตอนนี้ใช้ localStorage แทน server ไปก่อน (Issue #8)
-// พอ server พร้อม (Issue #9) ให้แก้เฉพาะข้างในฟังก์ชันเหล่านี้เป็น fetch('/api/...')
+// ทุกฟังก์ชันเป็น async และเรียก server ด้วย fetch (path สัมพัทธ์ /api/...)
+// ต้องเปิดหน้าเว็บผ่าน server (เช่น http://localhost:3000) ไม่ใช่เปิดไฟล์ index.html ตรงๆ
 // ส่วนอื่นของหน้าเว็บ (app.js) ไม่ต้องแก้
-
-const PROFILES_KEY = 'portfolio_profiles';
-const ITEMS_KEY = 'portfolio_items';
 
 // error ที่ app.js นำไปแสดง: errors คือรายการข้อความ (เหมือน {"errors": [...]} จาก server)
 class ApiError extends Error {
@@ -16,52 +12,52 @@ class ApiError extends Error {
     }
 }
 
-function readList(key) {
-    try {
-        return JSON.parse(localStorage.getItem(key)) || [];
-    } catch (err) {
-        throw new ApiError(['อ่านข้อมูลไม่สำเร็จ']);
+// ส่งคำขอไป server แล้วคืนข้อมูล JSON ที่ตอบกลับ
+// - 400 + {"errors": [...]}  → โยน ApiError(errors) ให้ app.js แสดงข้อความ
+// - status อื่นที่ไม่สำเร็จ     → โยน ApiError ข้อความทั่วไป
+// - ติดต่อ server ไม่ได้        → fetch โยน TypeError เอง app.js จะแสดงว่า "ติดต่อ server ไม่ได้"
+async function request(method, path, body) {
+    const options = { method, headers: { 'Accept': 'application/json' } };
+    if (body !== undefined) {
+        options.headers['Content-Type'] = 'application/json';
+        options.body = JSON.stringify(body);
     }
-}
 
-function writeList(key, list) {
+    const response = await fetch(path, options);
+
+    let data = null;
     try {
-        localStorage.setItem(key, JSON.stringify(list));
+        data = await response.json();
     } catch (err) {
-        throw new ApiError(['บันทึกข้อมูลไม่สำเร็จ']);
+        data = null;
     }
+
+    if (!response.ok) {
+        if (response.status === 400 && data && Array.isArray(data.errors) && data.errors.length > 0) {
+            throw new ApiError(data.errors);
+        }
+        throw new ApiError(['server ตอบกลับผิดพลาด (' + response.status + ') กรุณาลองใหม่อีกครั้ง']);
+    }
+    return data;
 }
 
 // GET /api/profiles
 async function getProfiles() {
-    return readList(PROFILES_KEY);
+    return request('GET', '/api/profiles');
 }
 
-// POST /api/profiles  (id สร้างที่นี่เหมือนที่ server จะสร้างให้ เก็บเป็น string)
+// POST /api/profiles  (id ให้ server สร้าง)
 async function createProfile(data) {
-    const profile = Object.assign({ id: String(Date.now()) }, data);
-    const profiles = readList(PROFILES_KEY);
-    profiles.push(profile);
-    writeList(PROFILES_KEY, profiles);
-    return profile;
+    return request('POST', '/api/profiles', data);
 }
 
 // GET /api/items  (profileId ไม่บังคับ ถ้าใส่จะได้เฉพาะผลงานของโปรไฟล์นั้น)
 async function getItems(profileId) {
-    const items = readList(ITEMS_KEY);
-    if (profileId === undefined) return items;
-    return items.filter(item => String(item.profileId) === String(profileId));
+    const query = profileId === undefined ? '' : '?profileId=' + encodeURIComponent(profileId);
+    return request('GET', '/api/items' + query);
 }
 
-// POST /api/items  (profileId ต้องมีอยู่จริง ไม่เช่นนั้นถือว่าข้อมูลผิด)
+// POST /api/items  (id ให้ server สร้าง, profileId ต้องมีอยู่จริง)
 async function createItem(data) {
-    const profiles = readList(PROFILES_KEY);
-    if (!profiles.some(p => String(p.id) === String(data.profileId))) {
-        throw new ApiError(['ไม่พบโปรไฟล์เจ้าของผลงาน']);
-    }
-    const item = Object.assign({ id: 'item' + Date.now() }, data);
-    const items = readList(ITEMS_KEY);
-    items.push(item);
-    writeList(ITEMS_KEY, items);
-    return item;
+    return request('POST', '/api/items', data);
 }
