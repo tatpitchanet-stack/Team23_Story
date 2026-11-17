@@ -1,6 +1,6 @@
 // ===== API LAYER =====
-// ทุกฟังก์ชันเป็น async และเรียก server ด้วย fetch (path สัมพัทธ์ /api/...)
-// ต้องเปิดหน้าเว็บผ่าน server (เช่น http://localhost:3000) ไม่ใช่เปิดไฟล์ index.html ตรงๆ
+// ทุกฟังก์ชันเป็น async และเรียก server (PHP) ด้วย fetch ไปที่ /api/profiles.php และ /api/items.php
+// ต้องเปิดหน้าเว็บผ่าน server (php -S localhost:3000 -t public) ไม่ใช่เปิดไฟล์ index.html ตรงๆ
 // ส่วนอื่นของหน้าเว็บ (app.js) ไม่ต้องแก้
 
 // error ที่ app.js นำไปแสดง: errors คือรายการข้อความ (เหมือน {"errors": [...]} จาก server)
@@ -43,21 +43,21 @@ async function request(method, path, body) {
 
 // GET /api/profiles
 async function getProfiles() {
-    return request('GET', '/api/profiles');
+    return request('GET', '/api/profiles.php');
 }
 
 // POST /api/profiles  (id ให้ server สร้าง)
 async function createProfile(data) {
-    return request('POST', '/api/profiles', data);
+    return request('POST', '/api/profiles.php', data);
 }
 
 // GET /api/items  (profileId ไม่บังคับ ถ้าใส่จะได้เฉพาะผลงานของโปรไฟล์นั้น)
 async function getItems(profileId) {
     const query = profileId === undefined ? '' : '?profileId=' + encodeURIComponent(profileId);
-    return request('GET', '/api/items' + query);
+    return request('GET', '/api/items.php' + query);
 }
 
 // POST /api/items  (id ให้ server สร้าง, profileId ต้องมีอยู่จริง)
 async function createItem(data) {
-    return request('POST', '/api/items', data);
+    return request('POST', '/api/items.php', data);
 }

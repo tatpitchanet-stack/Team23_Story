@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // เคลียร์ option เก่า (เหลือไว้แค่ตัวเลือกแรก)
         profileSelect.innerHTML = '<option value="">-- เลือกโปรไฟล์ --</option>';
 
-        // ดึงข้อมูลโปรไฟล์จาก LocalStorage
+        // ดึงข้อมูลโปรไฟล์จาก server
         let profiles = [];
         try {
             profiles = await getProfiles();
