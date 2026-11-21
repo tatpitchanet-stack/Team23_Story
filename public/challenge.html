@@ -23,6 +23,45 @@
             color: #1a1a17;
         }
 
+        /* ปุ่มกลับหน้าหลัก (ทรงเม็ดยา เหมือนปุ่มเมนูหน้าแรก) */
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+            padding: 6px 20px 6px 6px;
+            background: #fff;
+            color: #1a1a17;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: .2s;
+        }
+
+        .btn-back .back-arrow {
+            display: grid;
+            place-items: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #1a1a17;
+            color: #f7ec9a;
+            font-size: 14px;
+            transition: .2s;
+        }
+
+        .btn-back:hover {
+            background: #1a1a17;
+            color: #f7ec9a;
+        }
+
+        .btn-back:hover .back-arrow {
+            background: #f7ec9a;
+            color: #1a1a17;
+            transform: translateX(-3px);
+        }
+
         .hero-tag {
             display: inline-block;
             background: #1a1a17;
@@ -263,6 +302,8 @@
             <div class="row align-items-center">
 
                 <div class="col-md-8">
+
+                    <a href="index.html" class="btn-back"><span class="back-arrow">←</span>กลับหน้าหลัก</a><br>
 
                     <span class="hero-tag">TEAM 23 · HOST PAGE</span>
 
