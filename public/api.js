@@ -33,7 +33,7 @@ async function request(method, path, body) {
     }
 
     if (!response.ok) {
-        if (response.status === 400 && data && Array.isArray(data.errors) && data.errors.length > 0) {
+        if ((response.status === 400 || response.status === 404) && data && Array.isArray(data.errors) && data.errors.length > 0) {
             throw new ApiError(data.errors);
         }
         throw new ApiError(['server ตอบกลับผิดพลาด (' + response.status + ') กรุณาลองใหม่อีกครั้ง']);
@@ -60,4 +60,9 @@ async function getItems(profileId) {
 // POST /api/items  (id ให้ server สร้าง, profileId ต้องมีอยู่จริง)
 async function createItem(data) {
     return request('POST', '/api/items.php', data);
+}
+
+// DELETE /api/items?id=...  (ลบผลงานตาม id)
+async function deleteItem(id) {
+    return request('DELETE', '/api/items.php?id=' + encodeURIComponent(id));
 }

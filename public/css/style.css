@@ -325,3 +325,19 @@ html {
     border-radius: 999px;
     font-size: 12px;
 }
+
+.btn-delete {
+    margin-top: 8px;
+    margin-left: 8px;
+    padding: 6px 16px;
+    background: #fff;
+    color: #b73a2f;
+    border: 1px solid #b73a2f;
+    border-radius: 999px;
+    font-size: 14px;
+}
+
+.btn-delete:hover {
+    background: #b73a2f;
+    color: #fff;
+}

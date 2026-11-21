@@ -344,6 +344,23 @@ async function displayPortfolio() {
                 });
             }
 
+            // ปุ่มลบผลงาน (ถามยืนยันก่อน แล้วลบที่ server)
+            const deleteBtn = document.createElement('button');
+            deleteBtn.type = 'button';
+            deleteBtn.className = 'btn-delete';
+            deleteBtn.textContent = 'ลบผลงาน';
+            deleteBtn.addEventListener('click', async function () {
+                if (!confirm('ลบผลงาน "' + item.title + '" ใช่หรือไม่?')) return;
+                try {
+                    await deleteItem(item.id);
+                } catch (err) {
+                    alert(errorMessages(err).join('\n'));
+                    return;
+                }
+                await displayPortfolio();
+            });
+            itemCard.appendChild(deleteBtn);
+
             card.appendChild(itemCard);
         });
 

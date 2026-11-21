@@ -2,9 +2,10 @@
 // GET /api/items.php               → ผลงานทั้งหมด (200)
 // GET /api/items.php?profileId=ID  → เฉพาะผลงานของโปรไฟล์นั้น
 // POST /api/items.php              → สร้างผลงาน (201) หรือ 400 {"errors": [...]}
+// DELETE /api/items.php?id=ID      → ลบผลงาน (200) หรือ 404 ถ้าไม่พบ
 require __DIR__ . '/../../src/helpers.php';
 
-requireMethod('GET', 'POST');
+requireMethod('GET', 'POST', 'DELETE');
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $items = readList(ITEMS_FILE);
@@ -15,6 +16,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         }));
     }
     sendJson(200, $items);
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    $id = $_GET['id'] ?? '';
+    if (!is_string($id) || trim($id) === '' || strlen($id) > 100) {
+        badRequest(['ต้องระบุ id ของผลงานที่ต้องการลบ']);
+    }
+    $deleted = updateList(ITEMS_FILE, function ($list) use ($id) {
+        $kept = array_values(array_filter($list, function ($i) use ($id) {
+            return (string) $i['id'] !== $id;
+        }));
+        return [$kept, count($kept) !== count($list)];
+    });
+    if (!$deleted) {
+        sendJson(404, ['errors' => ['ไม่พบผลงานที่ต้องการลบ']]);
+    }
+    sendJson(200, ['deleted' => $id]);
 }
 
 $d = readJsonBody();
