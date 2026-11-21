@@ -30,6 +30,7 @@
                 <a href="#add-portfolio-item" class="hero-step"><span class="hero-step-no">02</span>Add item</a>
                 <a href="#portfolio-section" class="hero-step"><span class="hero-step-no">03</span>My portfolios</a>
                 <a href="challenge.html" class="hero-step"><span class="hero-step-no">↗</span>Host Challenge</a>
+                <a href="#import-export-section" class="hero-step"><span class="hero-step-no">05</span>Import / Export</a>
             </nav>
         </div>
     </header>
@@ -234,6 +235,99 @@
                 </div>
             </div>
         </section>
+        <section id="import-export-section" class="section-padding">
+    <div class="container">
+        <div class="list-heading">
+            <span class="list-kicker">05</span>
+            <h2>Import / Export</h2>
+        </div>
+
+        <!-- Import -->
+        <div class="form-card mb-4">
+            <div class="form-body">
+                <h3>Import Portfolio Item</h3>
+
+                <p>
+                    เมื่อคุณไปทำ Challenge ของกลุ่มอื่น
+                    ให้นำ JSON ที่ได้รับมาวางในช่องนี้
+                    จากนั้นระบบจะเติมข้อมูลลงในแบบฟอร์ม Add item
+                </p>
+
+                <div class="mb-3">
+                    <label for="importJson" class="form-label">
+                        วาง Portfolio Item JSON
+                    </label>
+
+                    <textarea
+                        id="importJson"
+                        class="form-control"
+                        rows="12"
+                        placeholder="วาง JSON ที่ได้รับจากกลุ่มอื่นตรงนี้"
+                    ></textarea>
+                </div>
+
+                <button
+                    type="button"
+                    id="import-challenge-button"
+                    class="btn btn-primary-custom"
+                >
+                    Import JSON
+                </button>
+
+                <div
+                    id="import-message"
+                    class="form-message mt-3"
+                    aria-live="polite"
+                ></div>
+
+                <p class="mt-3">
+                    หลัง Import ให้เลือก Profile ของตัวเองในส่วน Add item
+                    ตรวจสอบข้อมูล เติม Reflection ทั้ง 4 ช่อง
+                    และตรวจสอบ Evidence ก่อนกดบันทึกผลงาน
+                </p>
+            </div>
+        </div>
+
+        <!-- Export -->
+        <div class="form-card">
+            <div class="form-body">
+                <h3>Export My Portfolio</h3>
+
+                <p>
+                    เลือก Profile ของตัวเองเพื่อส่งออก Portfolio
+                    เฉพาะข้อมูลของตนเองเป็นไฟล์ my-portfolio.json
+                </p>
+
+                <div class="mb-3">
+                    <label for="exportProfileSelect" class="form-label">
+                        เลือก Profile
+                    </label>
+
+                    <select
+                        id="exportProfileSelect"
+                        class="form-select"
+                    >
+                        <option value="">-- เลือก Profile --</option>
+                    </select>
+                </div>
+
+                <button
+                    type="button"
+                    id="export-portfolio-button"
+                    class="btn btn-primary-custom"
+                >
+                    Export my-portfolio.json
+                </button>
+
+                <div
+                    id="export-message"
+                    class="form-message mt-3"
+                    aria-live="polite"
+                ></div>
+            </div>
+        </div>
+    </div>
+</section>
     </main>
 
     <footer class="site-footer">
