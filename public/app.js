@@ -318,9 +318,23 @@ async function displayPortfolio() {
             nextStep.textContent =
                 'Next Step: ' + (reflection.nextStep || '');
 
+            // ฟิลด์เสริมของ Challenge: แสดงเฉพาะการ์ดที่มีค่า
+            const extraLines = [];
+            if (item.hostGroup) {
+                const hostGroup = document.createElement('p');
+                hostGroup.textContent = 'Host Group: ' + item.hostGroup;
+                extraLines.push(hostGroup);
+            }
+            if (item.category) {
+                const category = document.createElement('p');
+                category.textContent = 'Category: ' + item.category;
+                extraLines.push(category);
+            }
+
             itemCard.append(
                 title,
                 type,
+                ...extraLines,
                 date,
                 role,
                 description,

@@ -13,7 +13,7 @@ class ApiError extends Error {
 }
 
 // ส่งคำขอไป server แล้วคืนข้อมูล JSON ที่ตอบกลับ
-// - 400 + {"errors": [...]}  → โยน ApiError(errors) ให้ app.js แสดงข้อความ
+// - 400/404/409 + {"errors": [...]}  → โยน ApiError(errors) ให้ app.js แสดงข้อความ
 // - status อื่นที่ไม่สำเร็จ     → โยน ApiError ข้อความทั่วไป
 // - ติดต่อ server ไม่ได้        → fetch โยน TypeError เอง app.js จะแสดงว่า "ติดต่อ server ไม่ได้"
 async function request(method, path, body) {
@@ -33,7 +33,7 @@ async function request(method, path, body) {
     }
 
     if (!response.ok) {
-        if ((response.status === 400 || response.status === 404) && data && Array.isArray(data.errors) && data.errors.length > 0) {
+        if ((response.status === 400 || response.status === 404 || response.status === 409) && data && Array.isArray(data.errors) && data.errors.length > 0) {
             throw new ApiError(data.errors);
         }
         throw new ApiError(['server ตอบกลับผิดพลาด (' + response.status + ') กรุณาลองใหม่อีกครั้ง']);

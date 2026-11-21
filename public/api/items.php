@@ -1,7 +1,7 @@
 <?php
 // GET /api/items.php               → ผลงานทั้งหมด (200)
 // GET /api/items.php?profileId=ID  → เฉพาะผลงานของโปรไฟล์นั้น
-// POST /api/items.php              → สร้างผลงาน (201) หรือ 400 {"errors": [...]}
+// POST /api/items.php              → สร้างผลงาน (201), 400 {"errors": [...]}, หรือ 409 ถ้า Import ซ้ำ
 // DELETE /api/items.php?id=ID      → ลบผลงาน (200) หรือ 404 ถ้าไม่พบ
 require __DIR__ . '/../../src/helpers.php';
 
@@ -53,9 +53,30 @@ if (!$found) {
 }
 
 $item = updateList(ITEMS_FILE, function ($list) use ($d) {
+    $pid = (string) $d['profileId'];
+    $newEv = array_map('trim', array_values($d['evidence']));
+    $hasChallenge = isset($d['challengeId'], $d['hostGroup']);
+
+    // กัน Import ซ้ำ (ตรวจเฉพาะในโปรไฟล์ปลายทาง)
+    foreach ($list as $x) {
+        if ((string) $x['profileId'] !== $pid) {
+            continue;
+        }
+        $dupChallenge = $hasChallenge
+            && isset($x['challengeId'], $x['hostGroup'])
+            && $x['challengeId'] === trim($d['challengeId'])
+            && $x['hostGroup'] === trim($d['hostGroup']);
+        $dupContent = trim($x['title']) === trim($d['title'])
+            && $x['date'] === trim($d['date'])
+            && $x['evidence'] === $newEv;
+        if ($dupChallenge || $dupContent) {
+            return [$list, null]; // ซ้ำ: ไม่เขียนอะไร
+        }
+    }
+
     $i = [
         'id' => 'item' . nextId($list),
-        'profileId' => (string) $d['profileId'],
+        'profileId' => $pid,
         'title' => trim($d['title']),
         'type' => trim($d['type']),
         'date' => trim($d['date']),
@@ -68,9 +89,19 @@ $item = updateList(ITEMS_FILE, function ($list) use ($d) {
             'challenge' => trim($d['reflection']['challenge']),
             'nextStep' => trim($d['reflection']['nextStep'])
         ],
-        'evidence' => array_map('trim', array_values($d['evidence']))
+        'evidence' => $newEv
     ];
+    // ฟิลด์เสริมของ Challenge
+    foreach (['challengeId', 'hostGroup', 'category', 'schemaVersion'] as $f) {
+        if (isset($d[$f])) {
+            $i[$f] = trim((string) $d[$f]);
+        }
+    }
     $list[] = $i;
     return [$list, $i];
 });
+
+if ($item === null) {
+    sendJson(409, ['errors' => ['ผลงานนี้ถูก Import ลงโปรไฟล์นี้แล้ว']]);
+}
 sendJson(201, $item);

@@ -16,7 +16,7 @@ const LIMITS = [
     'maxEvidence' => 10
 ];
 
-const ITEM_TYPES = ['Project', 'Activity', 'Certificate'];
+const ITEM_TYPES = ['Project', 'Activity', 'Certificate', 'Challenge'];
 
 function isBlank($v) {
     return !is_string($v) || trim($v) === '';
@@ -107,7 +107,7 @@ function validateItem($data) {
     checkText($errors, 'role', $data['role'] ?? null, LIMITS['short']);
     checkText($errors, 'description', $data['description'] ?? null, LIMITS['long']);
 
-    // type ต้องเป็นหนึ่งใน Project / Activity / Certificate
+    // type ต้องเป็นหนึ่งใน Project / Activity / Certificate / Challenge
     $type = $data['type'] ?? null;
     if (isBlank($type)) {
         $errors[] = 'กรุณากรอก type';
@@ -157,6 +157,19 @@ function validateItem($data) {
         $errors[] = 'evidence ต้องไม่เกิน ' . LIMITS['maxEvidence'] . ' ลิงก์';
     } elseif (count(array_filter($evidence, 'isHttpUrl')) !== count($evidence)) {
         $errors[] = 'evidence ต้องเป็นลิงก์ที่ขึ้นต้นด้วย http:// หรือ https://';
+    }
+
+    // ฟิลด์เสริมของ Challenge (ไม่บังคับ แต่ถ้ามีต้องถูกชนิด)
+    foreach (['challengeId', 'hostGroup'] as $f) {
+        if (isset($data[$f])) {
+            checkText($errors, $f, $data[$f], LIMITS['short']);
+        }
+    }
+    if (isset($data['category']) && !in_array($data['category'], ['discover', 'mix', 'levelup'], true)) {
+        $errors[] = 'category ต้องเป็น discover, mix หรือ levelup';
+    }
+    if (isset($data['schemaVersion']) && $data['schemaVersion'] !== '1.0') {
+        $errors[] = 'schemaVersion ต้องเป็น "1.0"';
     }
 
     return $errors;
