@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Spot the Difference | Team 23</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        body {
+            background: #fffdf0;
+        }
+
+        /* HERO */
+        .challenge-hero {
+            background: #f7ec9a;
+            padding: 45px 0 55px;
+            border-radius: 0 0 35px 35px;
+            color: #1a1a17;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: #1a1a17;
+            color: #f7ec9a;
+            padding: 6px 17px;
+            border-radius: 30px;
+            font-size: 12px;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .hero-heading {
+            font-size: clamp(2.3rem, 7vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.05;
+            margin-top: 22px;
+            text-transform: uppercase;
+        }
+
+        .hero-description {
+            max-width: 500px;
+            margin-top: 15px;
+            color: #55513b;
+        }
+
+        .hero-number {
+            font-size: 85px;
+            font-weight: 900;
+            opacity: .15;
+            text-align: right;
+        }
+
+        /* MAIN CARD */
+        .main-card {
+            background: white;
+            border: 1px solid #e6dc86;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(26, 26, 23, .06);
+        }
+
+        .card-heading {
+            padding: 22px 26px;
+            background: #f7ec9a;
+        }
+
+        .card-heading h4 {
+            font-weight: 700;
+            margin: 5px 0;
+            color: #1a1a17;
+        }
+
+        .card-heading p {
+            margin: 0;
+            font-size: 14px;
+            color: #615c3d;
+        }
+
+        .card-content {
+            padding: 26px;
+        }
+
+        /* SCORE CARDS */
+        .score-card {
+            background: #fffdf0;
+            border: 1px solid #e6dc86;
+            border-radius: 15px;
+            padding: 18px;
+            height: 100%;
+            transition: .2s;
+        }
+
+        .score-card:focus-within {
+            border-color: #1a1a17;
+            box-shadow: 0 0 0 3px rgba(247, 236, 154, .7);
+        }
+
+        .score-number {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #77704b;
+        }
+
+        .score-card input {
+            font-size: 27px;
+            font-weight: 700;
+            border: none;
+            background: transparent;
+            padding: 5px 0;
+            box-shadow: none !important;
+            color: #1a1a17;
+        }
+
+        .score-card input:focus {
+            border: none;
+        }
+
+        /* TOTAL */
+        .total-card {
+            background: #1a1a17;
+            color: #fffdf0;
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .total-score {
+            font-size: 38px;
+            font-weight: 900;
+        }
+
+        .level-badge {
+            display: inline-block;
+            background: #f7ec9a;
+            color: #1a1a17;
+            padding: 7px 15px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .progress {
+            height: 9px;
+            background: #444438;
+            border-radius: 20px;
+        }
+
+        .progress-bar {
+            background: #f7ec9a;
+            transition: width .3s;
+        }
+
+        /* SECTION TITLE */
+        .section-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #8b814e;
+            margin-bottom: 14px;
+        }
+
+        /* JSON */
+        #jsonOutput {
+            background: #1a1a17;
+            color: #f7ec9a;
+            border: none;
+            border-radius: 12px;
+            font-family: Consolas, monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            padding: 20px;
+        }
+
+        #jsonOutput:focus {
+            box-shadow: 0 0 0 3px #f7ec9a;
+        }
+
+        .btn-generate {
+            background: #1a1a17;
+            color: white;
+            border-radius: 30px;
+            padding: 11px 25px;
+            font-weight: 600;
+            border: 1px solid #1a1a17;
+        }
+
+        .btn-generate:hover {
+            background: #3d3b2b;
+            color: #f7ec9a;
+        }
+
+        .btn-copy {
+            background: #f7ec9a;
+            color: #1a1a17;
+            border-radius: 30px;
+            padding: 11px 25px;
+            font-weight: 600;
+            border: 1px solid #e6dc86;
+        }
+
+        .btn-copy:hover {
+            background: #ebdc72;
+            color: #1a1a17;
+        }
+
+        .step-label {
+            display: inline-flex;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            justify-content: center;
+            background: #1a1a17;
+            color: #f7ec9a;
+            border-radius: 50%;
+            font-size: 12px;
+            margin-right: 8px;
+        }
+
+        .form-control {
+            border-radius: 9px;
+            padding: 11px 13px;
+        }
+
+        .form-message {
+            color: #198754;
+            font-weight: 600;
+        }
+
+        .footer-note {
+            text-align: center;
+            color: #827c5b;
+            font-size: 12px;
+            letter-spacing: 1px;
+            padding: 25px 0;
+        }
+
+        @media(max-width:576px) {
+            .hero-number {
+                display: none;
+            }
+
+            .card-content {
+                padding: 18px;
+            }
+
+            .total-score {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HERO -->
+    <header class="challenge-hero">
+        <div class="container">
+            <div class="row align-items-center">
+
+                <div class="col-md-8">
+
+                    <span class="hero-tag">TEAM 23 · HOST PAGE</span>
+
+                    <h1 class="hero-heading">
+                        SPOT THE<br>
+                        DIFFERENCE.
+                    </h1>
+
+                    <p class="hero-description">
+                        Challenge your observation skills.
+                        Record the player's score and generate
+                        a Portfolio Item for their achievement.
+                    </p>
+
+                </div>
+
+                <div class="col-md-4">
+                    <div class="hero-number">05</div>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+
+    <main class="section-padding">
+        <div class="container">
+
+            <!-- MAIN CARD -->
+            <div class="main-card">
+
+                <div class="card-heading">
+
+                    <span class="hero-tag">HOST PANEL</span>
+
+                    <h4>Challenge Score Generator</h4>
+
+                    <p>กรอกคะแนนผู้เล่นเพื่อสร้าง Portfolio Item JSON</p>
+
+                </div>
+
+                <div class="card-content">
+
+                    <!-- SCORE -->
+                    <div class="section-label">
+                        <span class="step-label">01</span>
+                        PLAYER SCORE
+                    </div>
+
+                    <div class="row g-3 mb-4">
+
+                        <div class="col-md-4">
+                            <div class="score-card">
+                                <div class="score-number">01 / EASY</div>
+                                <h5 class="mt-2 fw-bold">ด่านง่าย</h5>
+                                <input type="number" class="form-control score" id="scoreEasy" min="0" max="5" step="1"
+                                    value="0">
+                                <small class="text-muted">คะแนนเต็ม 5 คะแนน</small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="score-card">
+                                <div class="score-number">02 / MEDIUM</div>
+                                <h5 class="mt-2 fw-bold">ด่านกลาง</h5>
+                                <input type="number" class="form-control score" id="scoreMedium" min="0" max="5"
+                                    step="1" value="0">
+                                <small class="text-muted">คะแนนเต็ม 5 คะแนน</small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="score-card">
+                                <div class="score-number">03 / HARD</div>
+                                <h5 class="mt-2 fw-bold">ด่านยาก</h5>
+                                <input type="number" class="form-control score" id="scoreHard" min="0" max="5" step="1"
+                                    value="0">
+                                <small class="text-muted">คะแนนเต็ม 5 คะแนน</small>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- TOTAL -->
+                    <div class="total-card mb-5">
+
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+                            <div>
+                                <div class="text-uppercase small" style="letter-spacing:2px;color:#f7ec9a">
+                                    Total Score
+                                </div>
+
+                                <div class="total-score">
+                                    <span id="total">0</span>
+                                    <span style="font-size:18px;color:#aaa">/ 15</span>
+                                </div>
+                            </div>
+
+                            <div class="text-md-end">
+                                <div class="small mb-2" style="color:#aaa">
+                                    PERFORMANCE LEVEL
+                                </div>
+
+                                <span class="level-badge" id="level">
+                                    Beginner
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <div class="progress mt-4">
+                            <div class="progress-bar" id="progressBar" style="width:0%">
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-2">
+                            <small style="color:#aaa">0 Points</small>
+                            <small style="color:#aaa">15 Points</small>
+                        </div>
+
+                    </div>
+
+
+                    <!-- EVIDENCE -->
+                    <div class="section-label">
+                        <span class="step-label">02</span>
+                        PORTFOLIO EVIDENCE
+                    </div>
+
+                    <div class="row g-3 mb-5">
+
+                        <div class="col-md-6">
+                            <label for="itemDate" class="form-label fw-semibold">
+                                Activity Date
+                            </label>
+
+                            <input type="date" class="form-control" id="itemDate">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="evidenceUrl" class="form-label fw-semibold">
+                                Evidence URL
+                            </label>
+
+                            <input type="url" class="form-control" id="evidenceUrl" placeholder="https://...">
+                        </div>
+
+                    </div>
+
+
+                    <!-- GENERATOR -->
+                    <div class="section-label">
+                        <span class="step-label">03</span>
+                        GENERATE PORTFOLIO
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+
+                        <button type="button" class="btn btn-generate" id="generateBtn">
+                            Generate JSON ↗
+                        </button>
+
+                        <button type="button" class="btn btn-copy" id="copyBtn">
+                            Copy JSON
+                        </button>
+
+                    </div>
+
+                    <div id="challenge-message" class="form-message mb-3" aria-live="polite">
+                    </div>
+
+                    <label class="form-label fw-semibold" for="jsonOutput">
+                        Generated Portfolio Item
+                    </label>
+
+                    <textarea id="jsonOutput" class="form-control" rows="17" readonly spellcheck="false"
+                        placeholder="Your JSON will appear here..."></textarea>
+
+                </div>
+            </div>
+
+            <div class="footer-note">
+                TEAM 23 · SPOT THE DIFFERENCE · PORTFOLIO SYSTEM
+            </div>
+
+        </div>
+    </main>
+
+
+    <script>
+
+        // LEVEL SYSTEM
+        function levelOf(total) {
+
+            if (total >= 15) return "Complete";
+            if (total >= 10) return "Almost Complete";
+            if (total >= 5) return "In Progress";
+
+            return "Beginner";
+        }
+
+
+        // READ SCORE
+        function readScore(id) {
+
+            const value = document.getElementById(id).value;
+
+            if (value.trim() === "") return null;
+
+            const number = Number(value);
+
+            if (!Number.isInteger(number) || number < 0 || number > 5) {
+                return null;
+            }
+
+            return number;
+        }
+
+
+        // GET ALL SCORES
+        function getScores() {
+
+            return [
+                readScore("scoreEasy"),
+                readScore("scoreMedium"),
+                readScore("scoreHard")
+            ];
+        }
+
+
+        // UPDATE SCORE
+        function updateTotal() {
+
+            const scores = getScores();
+
+            const totalElement = document.getElementById("total");
+            const levelElement = document.getElementById("level");
+            const progressBar = document.getElementById("progressBar");
+
+            if (scores.some(score => score === null)) {
+
+                totalElement.textContent = "-";
+                levelElement.textContent = "-";
+                progressBar.style.width = "0%";
+
+                return;
+            }
+
+            const total = scores.reduce((a, b) => a + b, 0);
+
+            totalElement.textContent = total;
+            levelElement.textContent = levelOf(total);
+
+            progressBar.style.width = (total / 15 * 100) + "%";
+        }
+
+
+        // MESSAGE
+        function setMessage(text, error = false) {
+
+            const message = document.getElementById("challenge-message");
+
+            message.textContent = text;
+
+            message.style.color = error ? "#b73a2f" : "#198754";
+        }
+
+
+        // MAIN
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // TODAY DATE
+            const today = new Date();
+
+            const pad = n => String(n).padStart(2, "0");
+
+            document.getElementById("itemDate").value =
+                today.getFullYear() + "-" +
+                pad(today.getMonth() + 1) + "-" +
+                pad(today.getDate());
+
+
+            // DEFAULT EVIDENCE
+            if (location.protocol === "http:" ||
+                location.protocol === "https:") {
+
+                document.getElementById("evidenceUrl").value =
+                    location.origin + "/";
+            }
+
+
+            // LISTEN TO SCORE
+            document.querySelectorAll(".score").forEach(input => {
+
+                input.addEventListener("input", updateTotal);
+
+            });
+
+            updateTotal();
+
+
+            // GENERATE JSON
+            document.getElementById("generateBtn")
+                .addEventListener("click", function () {
+
+                    const [easy, medium, hard] = getScores();
+
+                    const date = document.getElementById("itemDate").value;
+
+                    const evidence =
+                        document.getElementById("evidenceUrl").value.trim();
+
+                    if ([easy, medium, hard].some(score => score === null)) {
+
+                        setMessage("กรุณากรอกคะแนนเป็นจำนวนเต็ม 0–5", true);
+
+                        return;
+                    }
+
+                    if (!date) {
+
+                        setMessage("กรุณาเลือกวันที่", true);
+
+                        return;
+                    }
+
+                    let validUrl = false;
+
+                    try {
+
+                        const url = new URL(evidence);
+
+                        validUrl =
+                            url.protocol === "http:" ||
+                            url.protocol === "https:";
+
+                    } catch (error) {
+
+                        validUrl = false;
+
+                    }
+
+                    if (!validUrl) {
+
+                        setMessage("กรุณากรอกลิงก์หลักฐาน http:// หรือ https://", true);
+
+                        return;
+                    }
+
+                    const total = easy + medium + hard;
+
+                    const item = {
+
+                        title: "Spot the Difference Challenge",
+
+                        type: "Activity",
+
+                        date: date,
+
+                        role: "Tester",
+
+                        description:
+                            "เล่นเกมจับผิดภาพ 3 ด่าน (ง่าย " +
+                            easy + "/5, กลาง " +
+                            medium + "/5, ยาก " +
+                            hard + "/5) รวม " +
+                            total + "/15 คะแนน ระดับ " +
+                            levelOf(total),
+
+                        skills: [
+                            "Observation",
+                            "Attention to detail"
+                        ],
+
+                        reflection: {
+
+                            whatIDid: "(เขียนเอง)",
+
+                            whatILearned: "(เขียนเอง)",
+
+                            challenge: "(เขียนเอง)",
+
+                            nextStep: "(เขียนเอง)"
+
+                        },
+
+                        evidence: [evidence]
+
+                    };
+
+                    document.getElementById("jsonOutput").value =
+                        JSON.stringify(item, null, 2);
+
+                    setMessage("✓ สร้าง JSON สำเร็จ! พร้อมคัดลอก");
+
+                });
+
+
+            // COPY JSON
+            document.getElementById("copyBtn")
+                .addEventListener("click", async function () {
+
+                    const output = document.getElementById("jsonOutput");
+
+                    if (!output.value.trim()) {
+
+                        setMessage("กรุณาสร้าง JSON ก่อน", true);
+
+                        return;
+                    }
+
+                    try {
+
+                        await navigator.clipboard.writeText(output.value);
+
+                        setMessage("✓ Copy JSON สำเร็จแล้ว!");
+
+                    } catch (error) {
+
+                        output.focus();
+                        output.select();
+
+                        const success = document.execCommand("copy");
+
+                        setMessage(
+                            success ? "✓ Copy JSON สำเร็จแล้ว!" :
+                                "กรุณากด Ctrl + C เพื่อคัดลอก"
+                        );
+
+                    }
+
+                });
+
+        });
+
+    </script>
+
+</body>
+
+</html>
