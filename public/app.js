@@ -195,6 +195,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 evidence: evidenceArray
             };
 
+            // ฟิลด์เสริมจาก Import (challengeId, hostGroup, category, schemaVersion)
+            const pending = window.pendingImportedItem;
+            if (pending) {
+                ['challengeId', 'hostGroup', 'category', 'schemaVersion'].forEach(function (f) {
+                    if (pending[f] !== undefined) {
+                        newItem[f] = pending[f];
+                    }
+                });
+            }
+
             showFormMessage('item-form-message', []);
             try {
                 await createItem(newItem);
@@ -205,6 +215,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             alert("Portfolio Item saved!");
+            window.pendingImportedItem = null;
             itemForm.reset();
 
             // แสดง Portfolio Item ที่เพิ่งบันทึกบนหน้าเว็บทันที
