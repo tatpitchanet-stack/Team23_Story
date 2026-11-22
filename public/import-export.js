@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const importButton = document.getElementById('import-challenge-button');
     const importInput = document.getElementById('importJson');
     const importMessage = document.getElementById('import-message');
+    const importProfileSelect = document.getElementById('importProfileSelect');
 
     const exportProfileSelect = document.getElementById('exportProfileSelect');
     const exportButton = document.getElementById('export-portfolio-button');
@@ -40,19 +41,27 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function isRealDate(value) {
-        if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+        const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+
+        if (!match) {
             return false;
         }
 
-        const date = new Date(value + 'T00:00:00');
+        const year = Number(match[1]);
+        const month = Number(match[2]);
+        const day = Number(match[3]);
 
-        return !Number.isNaN(date.getTime()) &&
-            date.toISOString().slice(0, 10) === value;
+        // ใช้ UTC ทั้งหมด กันปัญหาเขตเวลา (เช่น ไทย UTC+7 ทำให้วันที่เลื่อนไป 1 วัน)
+        const date = new Date(Date.UTC(year, month - 1, day));
+
+        return date.getUTCFullYear() === year &&
+            date.getUTCMonth() === month - 1 &&
+            date.getUTCDate() === day;
     }
 
     function validateImportedItem(item) {
         if (!isObject(item)) {
-            return 'ข้อมูล JSON ต้องเป็น Object';
+            return 'JSON ที่วางต้องเป็นข้อมูลก้อนเดียวที่ขึ้นต้นด้วย { ไม่ใช่รายการหรือข้อความธรรมดา';
         }
 
         const requiredStrings = [
@@ -68,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 typeof item[field] !== 'string' ||
                 item[field].trim() === ''
             ) {
-                return 'กรุณาตรวจสอบฟิลด์ ' + field;
+                return 'ช่อง ' + field + ' ใน JSON ว่างอยู่ หรือไม่ใช่ข้อความ';
             }
         }
 
@@ -80,11 +89,11 @@ document.addEventListener('DOMContentLoaded', function () {
         ];
 
         if (!allowedTypes.includes(item.type)) {
-            return 'ประเภทผลงานไม่ถูกต้อง';
+            return 'type ต้องเป็น Project, Activity, Certificate หรือ Challenge อย่างใดอย่างหนึ่ง';
         }
 
         if (!isRealDate(item.date)) {
-            return 'รูปแบบวันที่ไม่ถูกต้อง';
+            return 'วันที่ต้องเขียนแบบ ปปปป-ดด-วว เช่น 2026-11-24 และต้องเป็นวันที่ที่มีจริง';
         }
 
         if (
@@ -97,11 +106,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     skill.trim() !== ''
             )
         ) {
-            return 'Skills ต้องเป็น Array ของข้อความ 1–20 รายการ';
+            return 'skills ต้องมีทักษะอย่างน้อย 1 อย่าง และไม่เกิน 20 อย่าง';
         }
 
         if (!isObject(item.reflection)) {
-            return 'Reflection ต้องเป็น Object';
+            return 'reflection ต้องมี 4 ช่อง คือ whatIDid, whatILearned, challenge, nextStep';
         }
 
         const reflectionFields = [
@@ -113,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         for (const field of reflectionFields) {
             if (typeof item.reflection[field] !== 'string') {
-                return 'Reflection ช่อง ' + field + ' ต้องเป็นข้อความ';
+                return 'reflection.' + field + ' ต้องเป็นข้อความ';
             }
         }
 
@@ -127,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     isHttpUrl(url)
             )
         ) {
-            return 'Evidence ต้องเป็น Array ที่มีลิงก์ HTTP/HTTPS อย่างน้อย 1 ลิงก์';
+            return 'evidence ต้องมีลิงก์ที่ขึ้นต้นด้วย http:// หรือ https:// อย่างน้อย 1 ลิงก์';
         }
 
         // ตรวจสอบ optional fields ถ้ามีต้องเป็นชนิดที่ถูกต้อง
@@ -173,7 +182,17 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!rawJson) {
                 showMessage(
                     importMessage,
-                    'กรุณาวาง JSON ก่อนกด Import',
+                    'ยังไม่ได้วาง JSON วางในช่องด้านบนก่อนแล้วกด Import อีกครั้ง',
+                    true
+                );
+                return;
+            }
+
+            // ต้องเลือก Profile ปลายทางก่อน
+            if (!importProfileSelect || !importProfileSelect.value) {
+                showMessage(
+                    importMessage,
+                    'เลือกโปรไฟล์ที่จะเก็บผลงานนี้ก่อนกด Import',
                     true
                 );
                 return;
@@ -186,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
             } catch (error) {
                 showMessage(
                     importMessage,
-                    'JSON ไม่ถูกต้อง กรุณาตรวจสอบข้อมูลอีกครั้ง',
+                    'อ่าน JSON ไม่ได้ ลองเช็คว่าวางมาครบ ไม่ขาดวงเล็บหรือเครื่องหมายคำพูด',
                     true
                 );
                 return;
@@ -206,6 +225,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // เก็บข้อมูลทั้งหมดไว้ เพื่อส่งฟิลด์เสริมตอน Save
             window.pendingImportedItem = item;
+
+            // ตั้ง Profile ปลายทางในฟอร์ม Add Item ตามที่เลือก
+            document.getElementById('profileSelect').value =
+                importProfileSelect.value;
 
             // เติมข้อมูลทั่วไปลงใน Add Item Form
             document.getElementById('title').value = item.title;
@@ -238,7 +261,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             showMessage(
                 importMessage,
-                'Import สำเร็จ! เลือก Profile ของตัวเองในส่วน Add Item เติม Reflection ให้ครบ ตรวจสอบ Evidence แล้วกดบันทึกผลงาน'
+                'Import เรียบร้อย ข้อมูลถูกเติมในฟอร์มเพิ่มผลงานแล้ว เขียน Reflection ของคุณให้ครบ เช็คลิงก์หลักฐาน แล้วกดบันทึกผลงาน'
             );
 
             // เลื่อนไปยังแบบฟอร์มเพิ่มผลงาน
@@ -247,35 +270,40 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // ===== LOAD EXPORT PROFILES =====
-    async function loadExportProfiles() {
-        if (!exportProfileSelect) return;
-
+    // ===== LOAD PROFILES (Import + Export dropdown) =====
+    async function loadProfileOptions() {
         try {
             const profiles = await getProfiles();
 
-            exportProfileSelect.innerHTML =
-                '<option value="">-- เลือก Profile --</option>';
+            [importProfileSelect, exportProfileSelect].forEach(select => {
+                if (!select) return;
 
-            profiles.forEach(profile => {
-                const option = document.createElement('option');
+                const current = select.value;
+                select.innerHTML =
+                    '<option value="">-- เลือก Profile --</option>';
 
-                option.value = profile.id;
-                option.textContent = profile.displayName;
+                profiles.forEach(profile => {
+                    const option = document.createElement('option');
 
-                exportProfileSelect.appendChild(option);
+                    option.value = profile.id;
+                    option.textContent = profile.displayName;
+
+                    select.appendChild(option);
+                });
+
+                select.value = current;
             });
 
         } catch (error) {
             showMessage(
                 exportMessage,
-                error.message || 'ไม่สามารถโหลด Profiles ได้',
+                error.message || 'โหลดรายชื่อโปรไฟล์ไม่สำเร็จ',
                 true
             );
         }
     }
 
-    loadExportProfiles();
+    loadProfileOptions();
 
     // ===== EXPORT =====
     if (exportButton) {
@@ -288,7 +316,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!profileId) {
                 showMessage(
                     exportMessage,
-                    'กรุณาเลือก Profile ก่อน Export',
+                    'เลือกโปรไฟล์ก่อน Export',
                     true
                 );
                 return;
@@ -302,7 +330,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 );
 
                 if (!profile) {
-                    throw new Error('ไม่พบ Profile ที่เลือก');
+                    throw new Error('ไม่พบโปรไฟล์ที่เลือก');
                 }
 
                 const items = await getItems(profileId);
@@ -322,7 +350,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             )
                     ) {
                         throw new Error(
-                            'มีผลงานที่ Reflection ยังไม่ครบ กรุณาแก้ไขก่อน Export'
+                            'มีผลงานที่ Reflection ยังเขียนไม่ครบ ต้องแก้ผลงานนั้นก่อนถึงจะ Export ได้'
                         );
                     }
 
@@ -336,7 +364,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         )
                     ) {
                         throw new Error(
-                            'มีผลงานที่ Evidence ไม่ถูกต้อง กรุณาแก้ไขก่อน Export'
+                            'มีผลงานที่ลิงก์หลักฐานไม่ถูกต้อง ต้องแก้ก่อนถึงจะ Export ได้'
                         );
                     }
                 }
@@ -370,7 +398,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 showMessage(
                     exportMessage,
-                    'Export my-portfolio.json สำเร็จ!'
+                    'Export สำเร็จ ได้ไฟล์ my-portfolio.json แล้ว'
                 );
 
             } catch (error) {

@@ -247,23 +247,30 @@
             <div class="form-body">
                 <h3>Import Portfolio Item</h3>
 
-                <p>
-                    เมื่อคุณไปทำ Challenge ของกลุ่มอื่น
-                    ให้นำ JSON ที่ได้รับมาวางในช่องนี้
-                    จากนั้นระบบจะเติมข้อมูลลงในแบบฟอร์ม Add item
-                </p>
-
                 <div class="mb-3">
                     <label for="importJson" class="form-label">
-                        วาง Portfolio Item JSON
+                        JSON ของผลงานที่ได้รับ
                     </label>
 
                     <textarea
                         id="importJson"
                         class="form-control"
                         rows="12"
-                        placeholder="วาง JSON ที่ได้รับจากกลุ่มอื่นตรงนี้"
+                        placeholder="วาง JSON จากบูธเพื่อนตรงนี้"
                     ></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="importProfileSelect" class="form-label">
+                        เก็บไว้ในโปรไฟล์ไหน <span class="text-danger">*</span>
+                    </label>
+
+                    <select
+                        id="importProfileSelect"
+                        class="form-select"
+                    >
+                        <option value="">-- เลือก Profile --</option>
+                    </select>
                 </div>
 
                 <button
@@ -280,11 +287,6 @@
                     aria-live="polite"
                 ></div>
 
-                <p class="mt-3">
-                    หลัง Import ให้เลือก Profile ของตัวเองในส่วน Add item
-                    ตรวจสอบข้อมูล เติม Reflection ทั้ง 4 ช่อง
-                    และตรวจสอบ Evidence ก่อนกดบันทึกผลงาน
-                </p>
             </div>
         </div>
 
@@ -293,14 +295,9 @@
             <div class="form-body">
                 <h3>Export My Portfolio</h3>
 
-                <p>
-                    เลือก Profile ของตัวเองเพื่อส่งออก Portfolio
-                    เฉพาะข้อมูลของตนเองเป็นไฟล์ my-portfolio.json
-                </p>
-
                 <div class="mb-3">
                     <label for="exportProfileSelect" class="form-label">
-                        เลือก Profile
+                        โปรไฟล์ที่จะ Export
                     </label>
 
                     <select
@@ -338,6 +335,7 @@
 
     <script src="api.js"></script>
     <script src="app.js"></script>
+    <script src="import-export.js"></script>
 </body>
 
 </html>
